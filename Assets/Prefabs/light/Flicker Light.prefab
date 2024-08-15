@@ -53,6 +53,7 @@ MonoBehaviour:
   _maxIntensity: 1
   _emmisionIntensity: 1
   _isBlinking: 0
+  _flickered: 1
 --- !u!1 &3471069434484003959
 GameObject:
   m_ObjectHideFlags: 0
