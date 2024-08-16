@@ -15,7 +15,8 @@ public abstract class Item : MonoBehaviour
         KeyCard
     }
 
-    [SerializeField] EItemType itemType;
+    [SerializeField] protected EItemType itemType;
+    [SerializeField] protected GameObject ItemOnUI;
 
     public abstract void Use();
 
@@ -25,5 +26,10 @@ public abstract class Item : MonoBehaviour
     public EItemType GetItemType()
     {
         return itemType;
+    }
+
+    public GameObject GetItemOnUI()
+    {
+        return ItemOnUI; 
     }
 }
