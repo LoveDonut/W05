@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class BlinkLight : MonoBehaviour
 {
@@ -12,20 +13,26 @@ public class BlinkLight : MonoBehaviour
     [SerializeField] private float _emmisionIntensity = 1f;
     private Material _emissionMaterial;
     [SerializeField]private bool _isBlinking = false;
-    [SerializeField] private bool _flickered = false;
-    void Start()
+    public enum BlinkType
+    {
+        Normal,
+        Blink,
+        Flicker
+    }
+    public BlinkType BlinkTypeValue = BlinkType.Normal;
+    void OnEnable()
     {
         _emissionMaterial = new Material(_emissionObject.GetComponent<Renderer>().material);
-        if(_flickered)
+        if(BlinkTypeValue == BlinkType.Flicker)
             StartCoroutine(Flicker());
-        else
+        else if (BlinkTypeValue == BlinkType.Blink)
             StartCoroutine(Blink());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(_flickered && !_isBlinking)
+        if(BlinkTypeValue == BlinkType.Flicker && !_isBlinking)
         {
             float intensity = Mathf.Lerp(_minIntensity, _maxIntensity, Mathf.PingPong(Time.time * _blinkSpeed, 1));
             _light.intensity = intensity;
