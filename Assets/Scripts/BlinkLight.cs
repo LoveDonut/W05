@@ -16,6 +16,7 @@ public class BlinkLight : MonoBehaviour
     public enum BlinkType
     {
         Normal,
+        Off,
         Blink,
         Flicker
     }
@@ -37,6 +38,18 @@ public class BlinkLight : MonoBehaviour
             float intensity = Mathf.Lerp(_minIntensity, _maxIntensity, Mathf.PingPong(Time.time * _blinkSpeed, 1));
             _light.intensity = intensity;
             _emissionMaterial.SetColor("_EmissionColor", new Color(intensity * _emmisionIntensity, intensity * _emmisionIntensity, intensity * _emmisionIntensity));
+            _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
+        }
+        else if (BlinkTypeValue == BlinkType.Off)
+        {
+            _light.intensity = 0;
+            _emissionMaterial.SetColor("_EmissionColor", new Color(0, 0, 0));
+            _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
+        }
+        else if (BlinkTypeValue == BlinkType.Normal)
+        {
+            _light.intensity = _maxIntensity;
+            _emissionMaterial.SetColor("_EmissionColor", new Color(_maxIntensity * _emmisionIntensity, _maxIntensity * _emmisionIntensity, _maxIntensity * _emmisionIntensity));
             _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
         }
     }
