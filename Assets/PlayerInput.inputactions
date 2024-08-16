@@ -42,40 +42,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Button4",
+                    "name": "Crouch",
                     "type": "Button",
-                    "id": "cfd767e2-6661-43c6-a42d-512cac619017",
+                    "id": "a739ae2c-a57e-4308-a450-64e3fd3e7634",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Button3",
-                    "type": "Button",
-                    "id": "09d01a46-f614-4020-b4bd-bdb16e561a30",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Button2",
-                    "type": "Button",
-                    "id": "48c08197-8ae2-4b57-9676-d86853a68791",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Button1",
-                    "type": "Button",
-                    "id": "0927312d-e12f-416e-a00d-80d8f9130107",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -268,45 +241,23 @@
                 },
                 {
                     "name": "",
-                    "id": "74ea653a-b39f-4b78-aa4e-27de84b78442",
-                    "path": "<Keyboard>/1",
-                    "interactions": "Press",
+                    "id": "1dfc3853-0cf9-4375-8753-5f2a270511d7",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Button1",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "a4981f36-7879-44f8-b2cd-d410186ef873",
-                    "path": "<Keyboard>/2",
-                    "interactions": "Press",
+                    "id": "d6d40549-565d-499e-af0a-316b29598ca7",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Button2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "db1889a0-7eac-4362-b956-dba8cb965596",
-                    "path": "<Keyboard>/3",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Button3",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5e970b8e-1527-4409-8af0-c874b7cb6423",
-                    "path": "<Keyboard>/4",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Button4",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
