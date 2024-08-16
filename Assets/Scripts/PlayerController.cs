@@ -42,9 +42,13 @@ public class PlayerController : MonoBehaviour
     public bool isInteraction { get; private set; } = false;
 
     // Crouch settings
-    public float crouchHeight = 1f; // 웅크릴 때 캐릭터의 높이
-    public float standingHeight = 2f; // 서 있을 때 캐릭터의 높이
-    public float crouchSpeedChangeRate = 5f; // 웅크리기와 서기 애니메이션의 전환 속도
+    public float crouchHeight = 1f;             // 웅크릴 때 캐릭터의 높이
+    public float standingHeight = 2f;           // 서 있을 때 캐릭터의 높이
+    public float crouchSpeedChangeRate = 5f;    // 웅크리기와 서기 애니메이션의 전환 속도
+
+    // Interaction
+    public float interactionDistance = 3f;
+    private Door currentDoor;                   // 현재 상호작용 가능한 문
 
 
     // CharacterController Component
@@ -99,6 +103,9 @@ public class PlayerController : MonoBehaviour
 
         // Adjust character height and camera position based on crouch state
         AdjustHeight();
+
+        // Handle interaction
+        HandleInteraction();
     }
 
     private void FixedUpdate()
@@ -154,11 +161,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnInteraction()
-    {
-
-    }
-
     private void ApplyGravity()
     {
         // Check if grounded
@@ -188,6 +190,44 @@ public class PlayerController : MonoBehaviour
         // Adjust the camera position based on character's height
         cameraTransform.localPosition = new Vector3(cameraTransform.localPosition.x, heightOffset + cameraOffset, cameraTransform.localPosition.z);
         // stand y: 1.6, crouch y : 0.5
+    }
+
+    private void HandleInteraction()
+    {
+        // Create a ray from the camera to the forward direction
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        RaycastHit hit;
+
+        // Draw a debug ray (visible in the Scene view)
+        Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red);
+
+        // Check if the ray hits any object within the interaction distance
+        if (Physics.Raycast(ray, out hit, interactionDistance))
+        {
+            Debug.Log("닿음");
+            // Check if the hit object has a Door component
+            Door door = hit.transform.GetComponent<Door>();
+            if (door != null)
+            {
+                Debug.Log("문 있음");
+                currentDoor = door;
+
+                // If the interaction button is pressed, toggle the door state
+                if (interactionAction.triggered)
+                {
+                    Debug.Log("상호작용 키 눌림");
+                    door.ToggleDoor();
+                }
+            }
+            else
+            {
+                currentDoor = null;
+            }
+        }
+        else
+        {
+            currentDoor = null;
+        }
     }
 
 }

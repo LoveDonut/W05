@@ -4,18 +4,32 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    PlayerController playerController;
+    private bool isOpen = false;
 
-    private void Start()
+    public void ToggleDoor()
     {
-        playerController = GetComponent<PlayerController>();
+        if (isOpen)
+        {
+            CloseDoor();
+        }
+        else
+        {
+            OpenDoor();
+        }
+        isOpen = !isOpen;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OpenDoor()
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
+        Debug.Log("열림");
+        // 문을 여는 애니메이션이나 로직을 구현
+        transform.Rotate(Vector3.up, 90f); // 예시로 90도 회전
+    }
 
-        }
+    private void CloseDoor()
+    {
+        Debug.Log("닫힘");
+        // 문을 닫는 애니메이션이나 로직을 구현
+        transform.Rotate(Vector3.up, -90f); // 예시로 -90도 회전
     }
 }
