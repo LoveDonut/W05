@@ -12,11 +12,13 @@ public class Inventory : MonoBehaviour
     // default : -1 when not selected 
     int selectedItemIndex = -1;
 
+    public Item.EItemType SelectedItemType {  get; private set; }
+
     #region PrivateMethods
     void Start()
     {
         inventory = new List<GameObject>();
-
+        SelectedItemType = Item.EItemType.None;
     }
 
     //Remove Item when player uses it
@@ -35,6 +37,7 @@ public class Inventory : MonoBehaviour
         inventory.RemoveAt(selectedItemIndex);
         Destroy(itemUIPanel.GetChild(selectedItemIndex).gameObject);
         selectedItemIndex = -1;
+        SelectedItemType = Item.EItemType.None;
         UpdateInventoryUI();
     }
 
@@ -60,7 +63,7 @@ public class Inventory : MonoBehaviour
         Item.EItemType itemType = item.GetComponent<Item>().GetItemType();
 
         // drink can have more than one
-        if (itemType == Item.EItemType.drink)
+        if (itemType == Item.EItemType.Drink)
         {
             for (int i = 0; i < inventory.Count; i++)
             {
@@ -87,7 +90,7 @@ public class Inventory : MonoBehaviour
         Debug.Log($"Use Item {selectedItemIndex}");
 
         //remove item after use except flashlight
-        if (inventory[selectedItemIndex].GetComponent<Item>().GetItemType() != Item.EItemType.flashlight)
+        if (inventory[selectedItemIndex].GetComponent<Item>().GetItemType() != Item.EItemType.Flashlight)
         {
             RemoveItem();
         }
@@ -100,6 +103,7 @@ public class Inventory : MonoBehaviour
             return;
         }
         selectedItemIndex = index;
+        SelectedItemType = inventory[index].GetComponent<Item>().GetItemType();
 
         // update InventoryUI;
         UpdateInventoryUI();

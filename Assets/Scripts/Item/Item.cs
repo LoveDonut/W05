@@ -7,12 +7,12 @@ public abstract class Item : MonoBehaviour
 {
     public enum EItemType
     {
-        key,
-        cutter,
-        buildingMap,
-        drink,
-        flashlight,
-        keyCard
+        None,
+        Key,
+        Cutter,
+        Drink,
+        Flashlight,
+        KeyCard
     }
 
     [SerializeField] EItemType itemType;
