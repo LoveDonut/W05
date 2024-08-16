@@ -61,17 +61,24 @@ public class PlayerController : MonoBehaviour
     private Status status;
     public bool isRunning = true;
 
+    // Inventory
+    Inventory inventory;
+
+
     private void Awake()
     {
         // Character Controller component
         characterController = GetComponent<CharacterController>();
+        // Connect PlayerInput Component
+        playerInput = GetComponent<PlayerInput>();
+        // Connect Status Component
+        status = GetComponent<Status>();
+        // Connect Inventory component
+        inventory = GetComponent<Inventory>();
 
         // Fixing and hiding the cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        // Connect PlayerInput Component
-        playerInput = GetComponent<PlayerInput>();
 
         // Move Action
         moveAction = playerInput.actions["Move"];
@@ -256,6 +263,25 @@ public class PlayerController : MonoBehaviour
             else
             {
                 currentDoor = null;
+            }
+
+            // Check if the hit object has an Item component
+            Item item = hit.transform.GetComponent<Item>();
+            if (item != null)
+            {
+                Debug.Log("아이템임");
+
+                // If the interaction button is pressed, add the item to the inventory
+                if (interactionAction.triggered)
+                {
+                    // Add the item to the inventory
+                    inventory.AddItem(item.gameObject);
+
+                    // Optionally, destroy the item from the scene after picking it up
+                    Destroy(hit.transform.gameObject);
+
+                    Debug.Log($"{item.GetItemType()} 아이템이 인벤토리에 추가되었습니다.");
+                }
             }
         }
         else
