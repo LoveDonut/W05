@@ -34,7 +34,10 @@ public class Status : MonoBehaviour
         currentStamina = maxStamina;
         CanRunning = true;
 
-        postProcessVolume.profile.TryGetSettings(out vignette);
+        if (postProcessVolume != null)
+        {
+            postProcessVolume.profile.TryGetSettings(out vignette);
+        }
     }
 
     // Update is called once per frame
@@ -46,12 +49,18 @@ public class Status : MonoBehaviour
 
     void DecreaseSightByTime()
     {
-        vignette.intensity.value = Mathf.Clamp(vignette.intensity.value + mentalityDecreaseRate * Time.deltaTime, 0f, 1f);
+        if (vignette != null)
+        {
+            vignette.intensity.value = Mathf.Clamp(vignette.intensity.value + mentalityDecreaseRate * Time.deltaTime, 0f, 1f);
+        }
     }
 
     public void IncreaseSight()
     {
-        vignette.intensity.value = 0f;
+        if (vignette != null)
+        {
+            vignette.intensity.value = 0f;
+        }
     }
 
     public void ChangeStamina()
