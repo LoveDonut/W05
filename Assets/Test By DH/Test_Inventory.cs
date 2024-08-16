@@ -41,7 +41,7 @@ public class Test_Inventory : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Q))
         {
-            inventory.RemoveItem();
+            inventory.UseItem();
         }
     }
 
