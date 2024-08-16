@@ -12,11 +12,13 @@ public class Inventory : MonoBehaviour
     // default : -1 when not selected 
     int selectedItemIndex = -1;
 
+    public Item SelectedItem {  get; private set; }
+
     #region PrivateMethods
     void Start()
     {
         inventory = new List<GameObject>();
-
+        SelectedItem = null;
     }
 
     //Remove Item when player uses it
@@ -35,6 +37,7 @@ public class Inventory : MonoBehaviour
         inventory.RemoveAt(selectedItemIndex);
         Destroy(itemUIPanel.GetChild(selectedItemIndex).gameObject);
         selectedItemIndex = -1;
+        SelectedItem = null;
         UpdateInventoryUI();
     }
 
@@ -60,7 +63,7 @@ public class Inventory : MonoBehaviour
         Item.EItemType itemType = item.GetComponent<Item>().GetItemType();
 
         // drink can have more than one
-        if (itemType == Item.EItemType.drink)
+        if (itemType == Item.EItemType.Drink)
         {
             for (int i = 0; i < inventory.Count; i++)
             {
@@ -77,17 +80,22 @@ public class Inventory : MonoBehaviour
 
         // show item on UI
         GameObject newGrid = Instantiate(itemGrid, itemUIPanel);
-        Instantiate(item, newGrid.transform.position, Quaternion.identity, newGrid.transform);
+        Instantiate(item.GetComponent<Item>().GetItemOnUI(), newGrid.transform.position, Quaternion.identity, newGrid.transform);
+
+        Debug.Log($"들어온 아이템 : {item.GetComponent<Item>().GetItemType()}");
     }
 
     //player only use item when he selects it
     public void UseItem()
     {
-        //event occur
-        Debug.Log($"Use Item {selectedItemIndex}");
+        if(SelectedItem == null)
+        {
+            return;
+        }
+        SelectedItem.Use();
 
         //remove item after use except flashlight
-        if (inventory[selectedItemIndex].GetComponent<Item>().GetItemType() != Item.EItemType.flashlight)
+        if (inventory[selectedItemIndex].GetComponent<Item>().GetItemType() != Item.EItemType.Flashlight)
         {
             RemoveItem();
         }
@@ -100,11 +108,12 @@ public class Inventory : MonoBehaviour
             return;
         }
         selectedItemIndex = index;
+        SelectedItem = inventory[index].GetComponent<Item>();
 
         // update InventoryUI;
         UpdateInventoryUI();
 
         // Equip Item to player
-        Debug.Log($"Equip Item {index}");
+        Debug.Log($"Equip Item {SelectedItem.GetItemType()}");
     }
 }

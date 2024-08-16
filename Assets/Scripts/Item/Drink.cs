@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class Drink : Item
 {
+    Status status;
+
+    void Awake()
+    {
+        status = FindObjectOfType<Status>();
+    }
+
     public override void Use()
     {
-        Debug.Log("Heal mentality");
+        status.IncreaseSight();
     }
 
 }
