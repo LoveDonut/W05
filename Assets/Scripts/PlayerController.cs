@@ -4,6 +4,7 @@ using Unity.VisualScripting.InputSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Status))]
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5f;
@@ -33,6 +34,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 inputVector;
     private Vector2 lookInput;
 
+    // Status
+    private Status status;
+    public bool isRunning = true;
 
     private void Awake()
     {
@@ -58,6 +62,9 @@ public class PlayerController : MonoBehaviour
         // Look Action
         lookAction = playerInput.actions["Look"];
         lookAction.Enable();
+
+        // Connect Status Component
+        status = GetComponent<Status>();
     }
 
     void Update()
@@ -69,6 +76,7 @@ public class PlayerController : MonoBehaviour
         // Look Input (mouse)
         lookInput = lookAction.ReadValue<Vector2>() * lookSensitivity;
         smoothedLookInput = Vector2.Lerp(smoothedLookInput, lookInput, lookSmoothSpeed);
+
     }
 
     private void FixedUpdate()
@@ -86,10 +94,10 @@ public class PlayerController : MonoBehaviour
     private void OnMove()
     {
         // Check Run Action
-        bool isRunning = runAction.ReadValue<float>() > 0;
+        isRunning = runAction.ReadValue<float>() > 0;
 
         // Set Current Speed
-        float currentSpeed = isRunning ? runSpeed : speed;
+        float currentSpeed = isRunning && status.CanRunning ? runSpeed : speed;
 
         // Normalize the move direction vector
         if (moveDirection.magnitude > 0)
