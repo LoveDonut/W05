@@ -107,6 +107,8 @@ GameObject:
   - component: {fileID: 2702423482109785740}
   - component: {fileID: 6226549792720656415}
   - component: {fileID: 2436880528308343332}
+  - component: {fileID: 5538780811631378118}
+  - component: {fileID: 3353842586278530980}
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Player
@@ -251,13 +253,15 @@ MonoBehaviour:
   gravity: -9.81
   cameraTransform: {fileID: 1928942596453182773}
   minCameraAngle: -60
-  maxCameraAngle: 40
+  maxCameraAngle: 60
   lookSensitivity: 0.1
   lookSmoothSpeed: 0.1
   yRotationSmoothSpeed: 1
   crouchHeight: 1
   standingHeight: 2
   crouchSpeedChangeRate: 5
+  interactionDistance: 3
+  isRunning: 1
 --- !u!143 &2436880528308343332
 CharacterController:
   m_ObjectHideFlags: 0
@@ -284,3 +288,34 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5538780811631378118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7466170123144935131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f266f929f9b37c45b2f2b84ccb9fbd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 10
+  staminaDecreaseRate: 2
+  staminaCoolTime: 2
+  mentalityDecreaseRate: 0.1
+  postProcessVolume: {fileID: 0}
+--- !u!114 &3353842586278530980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7466170123144935131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec3bafa9cd6e8444b419b5df9045f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemGrid: {fileID: 0}
+  itemUIPanel: {fileID: 0}
