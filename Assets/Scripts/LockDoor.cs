@@ -7,7 +7,8 @@ public class LockDoor : Door
     public enum EDoorType 
     {
         KeyDoor,
-        CutterDoor
+        CutterDoor,
+        ExitDoor
     }
 
     [SerializeField] EDoorType doorType;
@@ -34,6 +35,32 @@ public class LockDoor : Door
             OpenDoor();
         }
         isOpen = !isOpen;
+    }
+
+    protected override void CloseDoor()
+    {
+        if (doorType != EDoorType.ExitDoor) 
+        {
+            base.CloseDoor();
+        }
+        else
+        {
+            //Exit door is closed differently from other types of door
+
+        }
+    }
+
+    protected override void OpenDoor()
+    {
+        if (doorType != EDoorType.ExitDoor)
+        {
+            base.OpenDoor();
+        }
+        else
+        {
+            //Exit door is Opened differently from other types of door
+
+        }
     }
 
     public void Unlock()

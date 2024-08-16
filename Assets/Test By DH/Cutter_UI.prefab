@@ -12,28 +12,32 @@ GameObject:
   - component: {fileID: 8649014069825948178}
   - component: {fileID: 1332308417162862765}
   - component: {fileID: 1388822162101328453}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6161993248549129155
-Transform:
+--- !u!224 &6161993248549129155
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4863742579512932277}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9087766698805287918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &8649014069825948178
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c8ab855e7179078469d7909542dc4fb5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,7 +119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9087766698805287918}
   - component: {fileID: 7635951483903141750}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Cutter_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,4 +159,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 1
-  ObjectOnUI: {fileID: 0}
+  ItemOnUI: {fileID: 0}
