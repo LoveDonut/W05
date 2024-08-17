@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour
     private InputAction interactionAction;
     private InputAction lookAction;
     private InputAction crouchAction;
+    private InputAction selectItemAction;
     private InputAction useAction;
+    private List<InputAction> itemSelectActions = new List<InputAction>();
 
     private Vector2 inputVector;
     private Vector2 lookInput;
@@ -98,13 +100,13 @@ public class PlayerController : MonoBehaviour
         interactionAction = playerInput.actions["Interaction"];
         interactionAction.Enable();
 
+        // SelectItem Action ¼³Á¤
+        //selectItemAction = playerInput.actions["SelectItem"];
+        //selectItemAction.Enable();
+
         // Use Action
         useAction = playerInput.actions["Use"];
         useAction.Enable();
-
-
-        // Connect Status Component
-        status = GetComponent<Status>();
 
         // Crouch Action
         crouchAction = playerInput.actions["Crouch"];
@@ -129,6 +131,9 @@ public class PlayerController : MonoBehaviour
 
         // Handle interaction
         HandleInteraction();
+
+        // Select Item
+        OnSelectItem();
     }
 
     private void FixedUpdate()
@@ -182,6 +187,25 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(cameraRotationX, 0f, 0f);
         cameraTransform.localRotation = Quaternion.Slerp(cameraTransform.localRotation, targetRotation, Time.deltaTime * 12f); // Adjust the smoothing factor (10f) as needed
 
+    }
+
+    private void OnSelectItem()
+    {
+        for (int i = 1; i <= 9; i++)
+        {
+            if (playerInput.actions["SelectItem" + i].triggered)
+            {
+                Debug.Log(i + " ´­¸²");
+                inventory.SelectItem(i - 1); // Index starts from 0
+                return;
+            }
+        }
+
+        if (playerInput.actions["SelectItem0"].triggered)
+        {
+            Debug.Log("0 ´­¸²");
+            inventory.SelectItem(9); // 0 corresponds to the 9th index
+        }
     }
 
     private void OnUse(InputValue value)
@@ -287,11 +311,20 @@ public class PlayerController : MonoBehaviour
                 // If the interaction button is pressed, add the item to the inventory
                 if (interactionAction.triggered)
                 {
-                    // Add the item to the inventory
-                    inventory.AddItem(item.gameObject);
+                    // Clone the item before adding it to the inventory
+                    GameObject itemClone = Instantiate(item.gameObject);
 
-                    // Optionally, destroy the item from the scene after picking it up
-                    Destroy(hit.transform.gameObject);
+                    // Disable the original item so it's no longer visible in the world
+                    item.gameObject.SetActive(false);
+                    itemClone.SetActive(false);
+
+                    // Add the cloned item to the inventory
+                    inventory.AddItem(itemClone);
+
+                    // Destroy(hit.transform.gameObject);  
+                    // ¿©±â°¡ ¹®Á¦. ¿ùµå¿¡¼­ »èÁ¦ÇØ ¹ö¸®¸é ÀÎº¥Åä¸®¿¡¼­ ÂüÁ¶°¡ ¾ÈµÊ. 
+                    // ÀÎº¥Åä¸®¿¡ Å¬·ÐÇØ¼­ ³Ö°í Å¬·ÐÇÑ ¾ÆÀÌÅÛÀ» ¼±ÅÃÇÏ´Â °ÍÀÌ ¾Æ´Ï¶ó
+                    // ¿ùµå¿¡ ³²¾Æ ÀÖ´Â °ÍÀ» °í¸£´Â °ÍÀÌ¶ó »èÁ¦µÈ ¿ÀºêÁ§Æ®¸¦ ÂüÁ¶ÇÏ°Ô µÊ.
 
                     Debug.Log($"{item.GetItemType()} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
                 }

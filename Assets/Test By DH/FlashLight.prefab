@@ -77,7 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce162df08e18e6547906993fa4bc2d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: 0
+  itemType: 4
   ItemOnUI: {fileID: 441464692990416154, guid: 90967191fc0d931439af5bcb3d025feb, type: 3}
   spotLight: {fileID: 3852289861239444772}
 --- !u!1 &3852289861239444772
