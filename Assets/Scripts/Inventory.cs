@@ -12,6 +12,8 @@ public class Inventory : MonoBehaviour
     // default : -1 when not selected 
     int selectedItemIndex = -1;
 
+    Coroutine coroutineInstance;
+
     public Item SelectedItem {  get; private set; }
 
     #region PrivateMethods
@@ -38,11 +40,11 @@ public class Inventory : MonoBehaviour
         Destroy(itemUIPanel.GetChild(selectedItemIndex).gameObject);
         selectedItemIndex = -1;
         SelectedItem = null;
-        UpdateInventoryUI();
     }
 
     void UpdateInventoryUI()
     {
+        itemUIPanel.gameObject.SetActive(true);
         Debug.Log($"inventory cout : {inventory.Count} / selectedItemIndex : {selectedItemIndex}");
         for (int i = 0; i < inventory.Count; i++)
         {
@@ -55,7 +57,21 @@ public class Inventory : MonoBehaviour
                 itemUIPanel.GetChild(i).GetComponent<Image>().enabled = false;
             }
         }
+
+
+        if (coroutineInstance != null)
+        {
+            StopCoroutine(coroutineInstance);
+        }
+        coroutineInstance = StartCoroutine(TurnOffUI());
     }
+
+    IEnumerator TurnOffUI()
+    {
+        yield return new WaitForSeconds(1f);
+        itemUIPanel.gameObject.SetActive(false);
+    }
+
     #endregion
 
     public void AddItem(GameObject item)
@@ -83,6 +99,8 @@ public class Inventory : MonoBehaviour
         Instantiate(item.GetComponent<Item>().GetItemOnUI(), newGrid.transform.position, Quaternion.identity, newGrid.transform);
 
         Debug.Log($"들어온 아이템 : {item.GetComponent<Item>().GetItemType()}");
+
+        UpdateInventoryUI();
     }
 
     //player only use item when he selects it
@@ -92,13 +110,12 @@ public class Inventory : MonoBehaviour
         {
             return;
         }
-        SelectedItem.Use();
 
-        //remove item after use except flashlight
-        if (inventory[selectedItemIndex].GetComponent<Item>().GetItemType() != Item.EItemType.Flashlight)
+        if (SelectedItem.Use())
         {
             RemoveItem();
         }
+
     }
 
     public void SelectItem(int index)
@@ -107,6 +124,13 @@ public class Inventory : MonoBehaviour
         {
             return;
         }
+
+        // if player change item when hold flashlight, turn it off before change
+        if (SelectedItem != null && SelectedItem.GetItemType() == Item.EItemType.Flashlight)
+        {
+            // turn off flashlight
+        }
+
         selectedItemIndex = index;
         SelectedItem = inventory[index].GetComponent<Item>();
 
