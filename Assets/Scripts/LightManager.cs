@@ -8,6 +8,23 @@ public class LightManager : MonoBehaviour
     [SerializeField] private GameObject[] _basicLights;
     // Start is called before the first frame update
     public float BasicLightIntensity = 1f;
+    void Start()
+    {
+        _fluorescentLights = GetChildfluoreObjects();
+    }
+
+    private GameObject[] GetChildfluoreObjects()
+    {
+        List<GameObject> lights = new List<GameObject>();
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<BlinkLight>() != null)
+            {
+                lights.Add(child.gameObject);
+            }
+        }
+        return lights.ToArray();
+    }
 
     public void TurnOffLights()
     {
