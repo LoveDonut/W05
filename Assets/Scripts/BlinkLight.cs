@@ -80,20 +80,24 @@ public class BlinkLight : MonoBehaviour
         while(true)
         {
             _isBlinking = true;
-            float curIntensity = _light.intensity;
+            float curIntensity = _maxIntensity;
             Color currentColor = _emissionMaterial.GetColor("_EmissionColor");
             
             _light.intensity = _minIntensity;
             _emissionMaterial.SetColor("_EmissionColor", new Color(_minIntensity, _minIntensity, _minIntensity));
             _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
             
             _light.intensity = curIntensity;
             _emissionMaterial.SetColor("_EmissionColor", currentColor);
             _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
             
             _isBlinking = false;
-            yield return new WaitForSeconds(Random.Range(0.8f, 1f));
+            yield return new WaitForSeconds(Random.Range(0.1f, 0.2f));
         }
+    }
+    public void SetMaxIntensity(float maxIntensity)
+    {
+        _maxIntensity = maxIntensity;
     }
 }
