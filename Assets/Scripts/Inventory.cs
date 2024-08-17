@@ -101,11 +101,12 @@ public class Inventory : MonoBehaviour
         GameObject newGrid = Instantiate(itemGrid, itemUIPanel);
         Instantiate(item.GetComponent<Item>().GetItemOnUI(), newGrid.transform.position, Quaternion.identity, newGrid.transform);
 
-        Debug.Log($"µé¾î¿Â ¾ÆÀÌÅÛ : {item.GetComponent<Item>().GetItemType()}");
+        Debug.Log($"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : {item.GetComponent<Item>().GetItemType()}");
 
         UpdateInventoryUI();
-        soundManager.PlaySoundOnce(item.GetComponent<Item>().getSound, item.transform.position);
 
+        if(soundManager != null)
+            soundManager.PlaySoundOnce(item.GetComponent<Item>().getSound, item.transform.position);
     }
 
     //player only use item when he selects it
@@ -118,12 +119,15 @@ public class Inventory : MonoBehaviour
 
         if(SelectedItem.GetItemType() == Item.EItemType.Flashlight)
         {
-            soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
+            if(soundManager != null)
+                soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
         }
 
         if (SelectedItem.Use())
         {
-            soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
+            if(soundManager != null)
+                soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
+
             RemoveItem();
         }
     }

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 3f;
     public float runSpeed = 5f;
     public float crouchSpeed = 1.5f;
+    public float climbSpeed = 2f;
     public float gravity = -9.81f;
     private Vector3 velocity;
 
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     private InputAction selectItemAction;
     private InputAction useAction;
     private List<InputAction> itemSelectActions = new List<InputAction>();
+    private InputAction climbAction;
 
     private Vector2 inputVector;
     private Vector2 lookInput;
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
     // state
     private bool isCrouching = false;
     public bool isInteraction { get; private set; } = false;
+    private bool isClimbing = false;        // is on ladder?
 
     // Crouch settings
     public float crouchHeight = 1f;             // ��ũ�� �� ĳ������ ����
@@ -67,6 +70,9 @@ public class PlayerController : MonoBehaviour
 
     // Inventory
     Inventory inventory;
+
+    // Ladder
+    private Transform ladderTransform;      // current ladder transform
 
 
     private void Awake()
@@ -111,6 +117,13 @@ public class PlayerController : MonoBehaviour
         // Crouch Action
         crouchAction = playerInput.actions["Crouch"];
         crouchAction.Enable();
+
+        // Climb Action (Ladder)
+        climbAction = playerInput.actions["Climb"];
+        climbAction.Enable();
+
+        // Active CharacterController's Overlap Recovery (CharacterController can restore the collision)
+        GetComponent<CharacterController>().enableOverlapRecovery = true;
     }
 
     void Update()
@@ -129,11 +142,18 @@ public class PlayerController : MonoBehaviour
         // Adjust character height and camera position based on crouch state
         AdjustHeight();
 
-        // Handle interaction
-        HandleInteraction();
+        if (isClimbing)
+        {
+            HandleLadderMovement();
+        }
+        else
+        {
+            // Handle interaction
+            HandleInteraction();
 
-        // Select Item
-        OnSelectItem();
+            // Select Item
+            OnSelectItem();
+        }
     }
 
     private void FixedUpdate()
@@ -141,8 +161,11 @@ public class PlayerController : MonoBehaviour
         // Move
         OnMove();
 
-        // Apply gravity
-        ApplyGravity();
+        if (!isClimbing)
+        {
+            // Apply gravity
+            ApplyGravity();
+        }
     }
 
     private void LateUpdate()
@@ -171,6 +194,42 @@ public class PlayerController : MonoBehaviour
         // Move
         //transform.Translate(moveDirection * currentSpeed * Time.deltaTime);
         characterController.Move((moveDirection * currentSpeed + velocity) * Time.deltaTime);
+    }
+
+    private void HandleLadderMovement()
+    {
+        if (isClimbing)
+        {
+            // Receive vertical direction input (climbAction is the input action set above)
+            float verticalInput = climbAction.ReadValue<float>();
+
+            // Move Y axis
+            Vector3 climbMovement = new Vector3(0, verticalInput * climbSpeed, 0);
+
+            characterController.Move(climbMovement * Time.deltaTime);
+
+            // No Gravity
+            velocity.y = 0f;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            isClimbing = true;
+
+            // No Gravity
+            velocity.y = 0f;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ladder"))
+        {
+            isClimbing = false;
+        }
     }
 
     private void OnLook()
