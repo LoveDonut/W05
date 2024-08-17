@@ -104,7 +104,7 @@ public class Inventory : MonoBehaviour
         Debug.Log($"들어온 아이템 : {item.GetComponent<Item>().GetItemType()}");
 
         UpdateInventoryUI();
-        soundManager.PlaySound(item.GetComponent<Item>().getSound, item.transform.position);
+        soundManager.PlaySoundOnce(item.GetComponent<Item>().getSound, item.transform.position);
 
     }
 
@@ -118,12 +118,12 @@ public class Inventory : MonoBehaviour
 
         if(SelectedItem.GetItemType() == Item.EItemType.Flashlight)
         {
-            soundManager.PlaySound(SelectedItem.useSound, Camera.main.transform.position);
+            soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
         }
 
         if (SelectedItem.Use())
         {
-            soundManager.PlaySound(SelectedItem.useSound, Camera.main.transform.position);
+            soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
             RemoveItem();
         }
     }
