@@ -32612,15 +32612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d24709c151a75414e9ad739379dce091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightManagers:
-  - {fileID: 1773393153}
-  - {fileID: 2045324765}
-  - {fileID: 1171189340}
-  - {fileID: 1314685385}
-  - {fileID: 2034838509}
-  - {fileID: 403308182}
-  - {fileID: 478545156}
-  - {fileID: 1314974297}
+  _lightManagers: []
 --- !u!1001 &1776596874
 PrefabInstance:
   m_ObjectHideFlags: 0

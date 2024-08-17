@@ -104,9 +104,9 @@ public class Inventory : MonoBehaviour
         Debug.Log($"���� ������ : {item.GetComponent<Item>().GetItemType()}");
 
         UpdateInventoryUI();
-        if(soundManager != null)
-            soundManager.PlaySound(item.GetComponent<Item>().getSound, item.transform.position);
 
+        if(soundManager != null)
+            soundManager.PlaySoundOnce(item.GetComponent<Item>().getSound, item.transform.position);
     }
 
     //player only use item when he selects it
@@ -120,13 +120,14 @@ public class Inventory : MonoBehaviour
         if(SelectedItem.GetItemType() == Item.EItemType.Flashlight)
         {
             if(soundManager != null)
-            soundManager.PlaySound(SelectedItem.useSound, Camera.main.transform.position);
+                soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
         }
 
         if (SelectedItem.Use())
         {
             if(soundManager != null)
-            soundManager.PlaySound(SelectedItem.useSound, Camera.main.transform.position);
+                soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
+
             RemoveItem();
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class SoundManager : MonoBehaviour
 {
@@ -36,8 +37,24 @@ public class SoundManager : MonoBehaviour
         audioSource.Stop();
     }
 
-    public void PlaySound(AudioClip audioClip, Vector3 pos)
+    public void PlaySoundOnce(AudioClip audioClip, Vector3 pos)
     {
         AudioSource.PlayClipAtPoint(audioClip, pos);
+    }
+
+    public void PlaySoundForSeconds(AudioClip audioClip, Vector3 pos, float time)
+    {
+        StartCoroutine(RepeatSound(audioClip, pos, time));
+    }
+
+    IEnumerator RepeatSound(AudioClip audioClip, Vector3 pos, float time)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < time)
+        {
+            AudioSource.PlayClipAtPoint(audioClip, pos);
+            elapsedTime += audioClip.length;
+            yield return new WaitForSeconds(audioClip.length);
+        }
     }
 }
