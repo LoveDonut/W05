@@ -17,8 +17,13 @@ public abstract class Item : MonoBehaviour
 
     [SerializeField] protected EItemType itemType;
     [SerializeField] protected GameObject ItemOnUI;
+    [Header("Sounds")]
+    public AudioClip getSound;
+    public AudioClip useSound;
 
-    public abstract void Use();
+
+
+    public abstract bool Use();
 
     // the number of items
     public int count { get; set; }

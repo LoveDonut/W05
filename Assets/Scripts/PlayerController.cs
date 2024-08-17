@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour
     private InputAction interactionAction;
     private InputAction lookAction;
     private InputAction crouchAction;
+    private InputAction selectItemAction;
     private InputAction useAction;
+    private List<InputAction> itemSelectActions = new List<InputAction>();
 
     private Vector2 inputVector;
     private Vector2 lookInput;
@@ -45,13 +47,13 @@ public class PlayerController : MonoBehaviour
     public bool isInteraction { get; private set; } = false;
 
     // Crouch settings
-    public float crouchHeight = 1f;             // ¿õÅ©¸± ¶§ Ä³¸¯ÅÍÀÇ ³ôÀÌ
-    public float standingHeight = 2f;           // ¼­ ÀÖÀ» ¶§ Ä³¸¯ÅÍÀÇ ³ôÀÌ
-    public float crouchSpeedChangeRate = 5f;    // ¿õÅ©¸®±â¿Í ¼­±â ¾Ö´Ï¸ÞÀÌ¼ÇÀÇ ÀüÈ¯ ¼Óµµ
+    public float crouchHeight = 1f;             // ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float standingHeight = 2f;           // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float crouchSpeedChangeRate = 5f;    // ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½Óµï¿½
 
     // Interaction
     public float interactionDistance = 3f;
-    private Door currentDoor;                   // ÇöÀç »óÈ£ÀÛ¿ë °¡´ÉÇÑ ¹®
+    private Door currentDoor;                   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
     // Create a ray from the camera to the forward direction
     public Ray ray {  get; private set; }
@@ -98,13 +100,13 @@ public class PlayerController : MonoBehaviour
         interactionAction = playerInput.actions["Interaction"];
         interactionAction.Enable();
 
+        // SelectItem Action ï¿½ï¿½ï¿½ï¿½
+        //selectItemAction = playerInput.actions["SelectItem"];
+        //selectItemAction.Enable();
+
         // Use Action
         useAction = playerInput.actions["Use"];
         useAction.Enable();
-
-
-        // Connect Status Component
-        status = GetComponent<Status>();
 
         // Crouch Action
         crouchAction = playerInput.actions["Crouch"];
@@ -129,6 +131,9 @@ public class PlayerController : MonoBehaviour
 
         // Handle interaction
         HandleInteraction();
+
+        // Select Item
+        OnSelectItem();
     }
 
     private void FixedUpdate()
@@ -184,6 +189,25 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void OnSelectItem()
+    {
+        for (int i = 1; i <= 9; i++)
+        {
+            if (playerInput.actions["SelectItem" + i].triggered)
+            {
+                Debug.Log(i + " ï¿½ï¿½ï¿½ï¿½");
+                inventory.SelectItem(i - 1); // Index starts from 0
+                return;
+            }
+        }
+
+        if (playerInput.actions["SelectItem0"].triggered)
+        {
+            Debug.Log("0 ï¿½ï¿½ï¿½ï¿½");
+            inventory.SelectItem(9); // 0 corresponds to the 9th index
+        }
+    }
+
     private void OnUse(InputValue value)
     {
         if(value.isPressed)
@@ -234,42 +258,21 @@ public class PlayerController : MonoBehaviour
 
         // Draw a debug ray (visible in the Scene view)
         Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red);
-
-        //// Check if the ray hits Locked Door within the interaction distance
-        //if (Physics.Raycast(ray, out hit, interactionDistance, LayerMask.GetMask("LockDoor")))
-        //{
-        //    LockDoor lockDoor = hit.transform.GetComponent<LockDoor>();
-        //    if (lockDoor != null) 
-        //    {
-        //        Debug.Log("Àá±ä ¹® Á¸Àç");
-
-        //        if(useAction.triggered)
-        //        {
-        //            if((lockDoor.GetDoorType() == LockDoor.EDoorType.KeyDoor && true) || // can unlock if door is keydoor and player hold key
-        //                (lockDoor.GetDoorType() == LockDoor.EDoorType.CutterDoor && true)) // can unlock if door is cutterDoor and player hold cutter
-        //            {
-        //                Debug.Log("Àá±ä ¹® ÇØÁ¦");
-        //                lockDoor.Unlock();
-        //            }
-        //        }
-        //    }
-        //}
-
         // Check if the ray hits any object within the interaction distance
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {
-//            Debug.Log("´êÀ½");
+//            Debug.Log("ï¿½ï¿½ï¿½ï¿½");
             // Check if the hit object has a Door component
             Door door = hit.transform.GetComponent<Door>();
             if (door != null)
             {
-//                Debug.Log("¹® ÀÖÀ½");
+//                Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 currentDoor = door;
 
                 // If the interaction button is pressed, toggle the door state
                 if (interactionAction.triggered)
                 {
-                    Debug.Log("»óÈ£ÀÛ¿ë Å° ´­¸²");
+                    Debug.Log("ï¿½ï¿½È£ï¿½Û¿ï¿½ Å° ï¿½ï¿½ï¿½ï¿½");
                     door.ToggleDoor();
                 }
             }
@@ -282,18 +285,42 @@ public class PlayerController : MonoBehaviour
             Item item = hit.transform.GetComponent<Item>();
             if (item != null)
             {
-                Debug.Log("¾ÆÀÌÅÛÀÓ");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 
                 // If the interaction button is pressed, add the item to the inventory
                 if (interactionAction.triggered)
                 {
-                    // Add the item to the inventory
-                    inventory.AddItem(item.gameObject);
+                    // Clone the item before adding it to the inventory
+                    GameObject itemClone = Instantiate(item.gameObject);
 
-                    // Optionally, destroy the item from the scene after picking it up
-                    Destroy(hit.transform.gameObject);
+                    // Disable the original item so it's no longer visible in the world
+                    item.gameObject.SetActive(false);
+                    itemClone.SetActive(false);
 
-                    Debug.Log($"{item.GetItemType()} ¾ÆÀÌÅÛÀÌ ÀÎº¥Åä¸®¿¡ Ãß°¡µÇ¾ú½À´Ï´Ù.");
+                    // Add the cloned item to the inventory
+                    inventory.AddItem(itemClone);
+
+                    // Destroy(hit.transform.gameObject);  
+                    // ï¿½ï¿½ï¿½â°¡ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½. 
+                    // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ö°ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½
+                    // ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½.
+
+                    Debug.Log($"{item.GetItemType()} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+                }
+            }
+
+            LightEvent[] lightEvents = hit.transform.GetComponents<LightEvent>();
+            if (lightEvents != null)
+            {
+                if(interactionAction.triggered)
+                {
+                    foreach (var lightEvent in lightEvents)
+                    {
+                        if (lightEvent != null)
+                        {
+                            lightEvent.TriggerLightEvent();
+                        }
+                    }
                 }
             }
         }

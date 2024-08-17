@@ -4,9 +4,34 @@ using UnityEngine;
 
 public class Cutter : Item
 {
-    public override void Use()
+    PlayerController playerController;
+    public override bool Use()
     {
-        Debug.Log("Cut Locker for entering basement");
+        playerController = FindObjectOfType<PlayerController>();
+        if (playerController == null)
+        {
+            return false;
+        }
+        Ray ray = playerController.ray;
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, playerController.interactionDistance, LayerMask.GetMask("LockDoor")))
+        {
+            LockDoor lockDoor = hit.transform.GetComponent<LockDoor>();
+            if (lockDoor != null)
+            {
+
+                if ((lockDoor.GetDoorType() == LockDoor.EDoorType.CutterDoor))
+                {
+                    Debug.Log("잠긴 문 해제");
+                    lockDoor.Unlock();
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
+
 
 }

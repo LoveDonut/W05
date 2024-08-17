@@ -2,21 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] GameObject itemGrid;
     [SerializeField] Transform itemUIPanel;
     List<GameObject> inventory;
+    SoundManager soundManager;
 
     // default : -1 when not selected 
     int selectedItemIndex = -1;
+
+    Coroutine coroutineInstance;
 
     public Item SelectedItem {  get; private set; }
 
     #region PrivateMethods
     void Start()
     {
+        soundManager = FindObjectOfType<SoundManager>();
         inventory = new List<GameObject>();
         SelectedItem = null;
     }
@@ -38,11 +43,11 @@ public class Inventory : MonoBehaviour
         Destroy(itemUIPanel.GetChild(selectedItemIndex).gameObject);
         selectedItemIndex = -1;
         SelectedItem = null;
-        UpdateInventoryUI();
     }
 
     void UpdateInventoryUI()
     {
+        itemUIPanel.gameObject.SetActive(true);
         Debug.Log($"inventory cout : {inventory.Count} / selectedItemIndex : {selectedItemIndex}");
         for (int i = 0; i < inventory.Count; i++)
         {
@@ -55,7 +60,21 @@ public class Inventory : MonoBehaviour
                 itemUIPanel.GetChild(i).GetComponent<Image>().enabled = false;
             }
         }
+
+
+        if (coroutineInstance != null)
+        {
+            StopCoroutine(coroutineInstance);
+        }
+        coroutineInstance = StartCoroutine(TurnOffUI());
     }
+
+    IEnumerator TurnOffUI()
+    {
+        yield return new WaitForSeconds(1f);
+        itemUIPanel.gameObject.SetActive(false);
+    }
+
     #endregion
 
     public void AddItem(GameObject item)
@@ -83,6 +102,10 @@ public class Inventory : MonoBehaviour
         Instantiate(item.GetComponent<Item>().GetItemOnUI(), newGrid.transform.position, Quaternion.identity, newGrid.transform);
 
         Debug.Log($"들어온 아이템 : {item.GetComponent<Item>().GetItemType()}");
+
+        UpdateInventoryUI();
+        soundManager.PlaySound(item.GetComponent<Item>().getSound, item.transform.position);
+
     }
 
     //player only use item when he selects it
@@ -92,11 +115,15 @@ public class Inventory : MonoBehaviour
         {
             return;
         }
-        SelectedItem.Use();
 
-        //remove item after use except flashlight
-        if (inventory[selectedItemIndex].GetComponent<Item>().GetItemType() != Item.EItemType.Flashlight)
+        if(SelectedItem.GetItemType() == Item.EItemType.Flashlight)
         {
+            soundManager.PlaySound(SelectedItem.useSound, Camera.main.transform.position);
+        }
+
+        if (SelectedItem.Use())
+        {
+            soundManager.PlaySound(SelectedItem.useSound, Camera.main.transform.position);
             RemoveItem();
         }
     }
@@ -107,6 +134,13 @@ public class Inventory : MonoBehaviour
         {
             return;
         }
+
+        // if player change item when hold flashlight, turn it off before change
+        if (SelectedItem != null && SelectedItem.GetItemType() == Item.EItemType.Flashlight)
+        {
+            SelectedItem.GetComponent<FlashLight>().TurnOff();
+        }
+
         selectedItemIndex = index;
         SelectedItem = inventory[index].GetComponent<Item>();
 

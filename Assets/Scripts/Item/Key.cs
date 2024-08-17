@@ -7,16 +7,12 @@ public class Key : Item
 {
     PlayerController playerController;
 
-    void Awake()
+    public override bool Use()
     {
         playerController = FindObjectOfType<PlayerController>();
-    }
-
-    public override void Use()
-    {
-        if(playerController == null)
+        if (playerController == null)
         {
-            return;
+            return false;
         }
         Ray ray = playerController.ray;
         RaycastHit hit;
@@ -26,14 +22,16 @@ public class Key : Item
             LockDoor lockDoor = hit.transform.GetComponent<LockDoor>();
             if (lockDoor != null)
             {
-                Debug.Log("잠긴 문 존재");
 
                 if ((lockDoor.GetDoorType() == LockDoor.EDoorType.KeyDoor))
                 {
                     Debug.Log("잠긴 문 해제");
                     lockDoor.Unlock();
+                    return true;
                 }
             }
         }
+
+        return false;
     }
 }
