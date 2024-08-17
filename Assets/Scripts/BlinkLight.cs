@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class BlinkLight : MonoBehaviour
 {
@@ -12,20 +13,43 @@ public class BlinkLight : MonoBehaviour
     [SerializeField] private float _emmisionIntensity = 1f;
     private Material _emissionMaterial;
     [SerializeField]private bool _isBlinking = false;
-    void Start()
+    public enum BlinkType
+    {
+        Normal,
+        Off,
+        Blink,
+        Flicker
+    }
+    public BlinkType BlinkTypeValue = BlinkType.Normal;
+    void OnEnable()
     {
         _emissionMaterial = new Material(_emissionObject.GetComponent<Renderer>().material);
-        StartCoroutine(Flicker());
+        if(BlinkTypeValue == BlinkType.Flicker)
+            StartCoroutine(Flicker());
+        else if (BlinkTypeValue == BlinkType.Blink)
+            StartCoroutine(Blink());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!_isBlinking)
+        if(BlinkTypeValue == BlinkType.Flicker && !_isBlinking)
         {
             float intensity = Mathf.Lerp(_minIntensity, _maxIntensity, Mathf.PingPong(Time.time * _blinkSpeed, 1));
             _light.intensity = intensity;
             _emissionMaterial.SetColor("_EmissionColor", new Color(intensity * _emmisionIntensity, intensity * _emmisionIntensity, intensity * _emmisionIntensity));
+            _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
+        }
+        else if (BlinkTypeValue == BlinkType.Off)
+        {
+            _light.intensity = 0;
+            _emissionMaterial.SetColor("_EmissionColor", new Color(0, 0, 0));
+            _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
+        }
+        else if (BlinkTypeValue == BlinkType.Normal)
+        {
+            _light.intensity = _maxIntensity;
+            _emissionMaterial.SetColor("_EmissionColor", new Color(_maxIntensity * _emmisionIntensity, _maxIntensity * _emmisionIntensity, _maxIntensity * _emmisionIntensity));
             _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
         }
     }
@@ -49,6 +73,27 @@ public class BlinkLight : MonoBehaviour
             
             _isBlinking = false;
             yield return new WaitForSeconds(Random.Range(0.1f, 1f));
+        }
+    }
+    private IEnumerator Blink()
+    {
+        while(true)
+        {
+            _isBlinking = true;
+            float curIntensity = _light.intensity;
+            Color currentColor = _emissionMaterial.GetColor("_EmissionColor");
+            
+            _light.intensity = _minIntensity;
+            _emissionMaterial.SetColor("_EmissionColor", new Color(_minIntensity, _minIntensity, _minIntensity));
+            _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
+            yield return new WaitForSeconds(0.5f);
+            
+            _light.intensity = curIntensity;
+            _emissionMaterial.SetColor("_EmissionColor", currentColor);
+            _emissionObject.GetComponent<Renderer>().material = _emissionMaterial;
+            
+            _isBlinking = false;
+            yield return new WaitForSeconds(Random.Range(0.8f, 1f));
         }
     }
 }
