@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour
     private InputAction interactionAction;
     private InputAction lookAction;
     private InputAction crouchAction;
+    private InputAction selectItemAction;
     private InputAction useAction;
+    private List<InputAction> itemSelectActions = new List<InputAction>();
 
     private Vector2 inputVector;
     private Vector2 lookInput;
@@ -98,13 +100,13 @@ public class PlayerController : MonoBehaviour
         interactionAction = playerInput.actions["Interaction"];
         interactionAction.Enable();
 
+        // SelectItem Action 설정
+        //selectItemAction = playerInput.actions["SelectItem"];
+        //selectItemAction.Enable();
+
         // Use Action
         useAction = playerInput.actions["Use"];
         useAction.Enable();
-
-
-        // Connect Status Component
-        status = GetComponent<Status>();
 
         // Crouch Action
         crouchAction = playerInput.actions["Crouch"];
@@ -129,6 +131,9 @@ public class PlayerController : MonoBehaviour
 
         // Handle interaction
         HandleInteraction();
+
+        // Select Item
+        OnSelectItem();
     }
 
     private void FixedUpdate()
@@ -182,6 +187,25 @@ public class PlayerController : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(cameraRotationX, 0f, 0f);
         cameraTransform.localRotation = Quaternion.Slerp(cameraTransform.localRotation, targetRotation, Time.deltaTime * 12f); // Adjust the smoothing factor (10f) as needed
 
+    }
+
+    private void OnSelectItem()
+    {
+        for (int i = 1; i <= 9; i++)
+        {
+            if (playerInput.actions["SelectItem" + i].triggered)
+            {
+                Debug.Log(i + " 눌림");
+                inventory.SelectItem(i - 1); // Index starts from 0
+                return;
+            }
+        }
+
+        if (playerInput.actions["SelectItem0"].triggered)
+        {
+            Debug.Log("0 눌림");
+            inventory.SelectItem(9); // 0 corresponds to the 9th index
+        }
     }
 
     private void OnUse(InputValue value)
@@ -287,11 +311,20 @@ public class PlayerController : MonoBehaviour
                 // If the interaction button is pressed, add the item to the inventory
                 if (interactionAction.triggered)
                 {
-                    // Add the item to the inventory
-                    inventory.AddItem(item.gameObject);
+                    // Clone the item before adding it to the inventory
+                    GameObject itemClone = Instantiate(item.gameObject);
 
-                    // Optionally, destroy the item from the scene after picking it up
-                    Destroy(hit.transform.gameObject);
+                    // Disable the original item so it's no longer visible in the world
+                    item.gameObject.SetActive(false);
+                    itemClone.SetActive(false);
+
+                    // Add the cloned item to the inventory
+                    inventory.AddItem(itemClone);
+
+                    // Destroy(hit.transform.gameObject);  
+                    // 여기가 문제. 월드에서 삭제해 버리면 인벤토리에서 참조가 안됨. 
+                    // 인벤토리에 클론해서 넣고 클론한 아이템을 선택하는 것이 아니라
+                    // 월드에 남아 있는 것을 고르는 것이라 삭제된 오브젝트를 참조하게 됨.
 
                     Debug.Log($"{item.GetItemType()} 아이템이 인벤토리에 추가되었습니다.");
                 }

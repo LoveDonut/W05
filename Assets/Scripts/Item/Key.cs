@@ -7,20 +7,18 @@ public class Key : Item
 {
     PlayerController playerController;
 
-    void Awake()
-    {
-        playerController = FindObjectOfType<PlayerController>();
-    }
-
     public override void Use()
     {
-        if(playerController == null)
+        playerController = FindObjectOfType<PlayerController>();
+        if (playerController == null)
         {
+            Debug.Log("No PlayerController...");
             return;
         }
         Ray ray = playerController.ray;
         RaycastHit hit;
 
+        Debug.Log("Use Key!");
         if (Physics.Raycast(ray, out hit, playerController.interactionDistance, LayerMask.GetMask("LockDoor")))
         {
             LockDoor lockDoor = hit.transform.GetComponent<LockDoor>();
