@@ -17,6 +17,11 @@ public abstract class Item : MonoBehaviour
 
     [SerializeField] protected EItemType itemType;
     [SerializeField] protected GameObject ItemOnUI;
+    [Header("Sounds")]
+    public AudioClip getSound;
+    public AudioClip useSound;
+
+
 
     public abstract bool Use();
 

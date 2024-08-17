@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] GameObject itemGrid;
     [SerializeField] Transform itemUIPanel;
     List<GameObject> inventory;
+    SoundManager soundManager;
 
     // default : -1 when not selected 
     int selectedItemIndex = -1;
@@ -19,6 +21,7 @@ public class Inventory : MonoBehaviour
     #region PrivateMethods
     void Start()
     {
+        soundManager = FindObjectOfType<SoundManager>();
         inventory = new List<GameObject>();
         SelectedItem = null;
     }
@@ -101,6 +104,8 @@ public class Inventory : MonoBehaviour
         Debug.Log($"들어온 아이템 : {item.GetComponent<Item>().GetItemType()}");
 
         UpdateInventoryUI();
+        soundManager.PlaySound(item.GetComponent<Item>().getSound, item.transform.position);
+
     }
 
     //player only use item when he selects it
@@ -111,11 +116,16 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        if (SelectedItem.Use())
+        if(SelectedItem.GetItemType() == Item.EItemType.Flashlight)
         {
-            RemoveItem();
+            soundManager.PlaySound(SelectedItem.useSound, Camera.main.transform.position);
         }
 
+        if (SelectedItem.Use())
+        {
+            soundManager.PlaySound(SelectedItem.useSound, Camera.main.transform.position);
+            RemoveItem();
+        }
     }
 
     public void SelectItem(int index)
