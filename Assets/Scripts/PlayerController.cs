@@ -259,26 +259,6 @@ public class PlayerController : MonoBehaviour
         // Draw a debug ray (visible in the Scene view)
         Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red);
 
-        //// Check if the ray hits Locked Door within the interaction distance
-        //if (Physics.Raycast(ray, out hit, interactionDistance, LayerMask.GetMask("LockDoor")))
-        //{
-        //    LockDoor lockDoor = hit.transform.GetComponent<LockDoor>();
-        //    if (lockDoor != null) 
-        //    {
-        //        Debug.Log("잠긴 문 존재");
-
-        //        if(useAction.triggered)
-        //        {
-        //            if((lockDoor.GetDoorType() == LockDoor.EDoorType.KeyDoor && true) || // can unlock if door is keydoor and player hold key
-        //                (lockDoor.GetDoorType() == LockDoor.EDoorType.CutterDoor && true)) // can unlock if door is cutterDoor and player hold cutter
-        //            {
-        //                Debug.Log("잠긴 문 해제");
-        //                lockDoor.Unlock();
-        //            }
-        //        }
-        //    }
-        //}
-
         // Check if the ray hits any object within the interaction distance
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {

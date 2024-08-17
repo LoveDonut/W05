@@ -128,7 +128,7 @@ public class Inventory : MonoBehaviour
         // if player change item when hold flashlight, turn it off before change
         if (SelectedItem != null && SelectedItem.GetItemType() == Item.EItemType.Flashlight)
         {
-            // turn off flashlight
+            SelectedItem.GetComponent<FlashLight>().TurnOff();
         }
 
         selectedItemIndex = index;
