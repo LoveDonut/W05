@@ -82,4 +82,12 @@ public class LightManager : MonoBehaviour
             light.GetComponent<Light>().intensity = BasicLightIntensity;
         }
     }
+
+    public void SetLightIntensity(float intensity)
+    {
+        foreach (var light in _fluorescentLights)
+        {
+            light.GetComponent<BlinkLight>().SetMaxIntensity(intensity);
+        }
+    }
 }

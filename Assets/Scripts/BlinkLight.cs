@@ -96,4 +96,8 @@ public class BlinkLight : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(0.8f, 1f));
         }
     }
+    public void SetMaxIntensity(float maxIntensity)
+    {
+        _maxIntensity = maxIntensity;
+    }
 }
