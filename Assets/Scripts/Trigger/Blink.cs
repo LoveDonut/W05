@@ -14,10 +14,10 @@ public class Blink : LightEvent
     private IEnumerator BlinkLight()
     {
         CallTurnOffLights();
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(0.1f);
         SetLightIntensity(afterIntensity);
         CallTurnOnBlinkLights();
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(time);
         SetLightIntensity(0.7f);
         CallTurnOnFlickerLights();
 
