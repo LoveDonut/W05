@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
         interactionAction = playerInput.actions["Interaction"];
         interactionAction.Enable();
 
-        // SelectItem Action ¼³Á¤
+        // SelectItem Action ï¿½ï¿½ï¿½ï¿½
         //selectItemAction = playerInput.actions["SelectItem"];
         //selectItemAction.Enable();
 
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
         {
             if (playerInput.actions["SelectItem" + i].triggered)
             {
-                Debug.Log(i + " ´­¸²");
+                Debug.Log(i + " ï¿½ï¿½ï¿½ï¿½");
                 inventory.SelectItem(i - 1); // Index starts from 0
                 return;
             }
@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.actions["SelectItem0"].triggered)
         {
-            Debug.Log("0 ´­¸²");
+            Debug.Log("0 ï¿½ï¿½ï¿½ï¿½");
             inventory.SelectItem(9); // 0 corresponds to the 9th index
         }
     }
@@ -258,27 +258,6 @@ public class PlayerController : MonoBehaviour
 
         // Draw a debug ray (visible in the Scene view)
         Debug.DrawRay(ray.origin, ray.direction * interactionDistance, Color.red);
-
-        //// Check if the ray hits Locked Door within the interaction distance
-        //if (Physics.Raycast(ray, out hit, interactionDistance, LayerMask.GetMask("LockDoor")))
-        //{
-        //    LockDoor lockDoor = hit.transform.GetComponent<LockDoor>();
-        //    if (lockDoor != null) 
-        //    {
-        //        Debug.Log("ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
-
-        //        if(useAction.triggered)
-        //        {
-        //            if((lockDoor.GetDoorType() == LockDoor.EDoorType.KeyDoor && true) || // can unlock if door is keydoor and player hold key
-        //                (lockDoor.GetDoorType() == LockDoor.EDoorType.CutterDoor && true)) // can unlock if door is cutterDoor and player hold cutter
-        //            {
-        //                Debug.Log("ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
-        //                lockDoor.Unlock();
-        //            }
-        //        }
-        //    }
-        //}
-
         // Check if the ray hits any object within the interaction distance
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {
@@ -322,9 +301,9 @@ public class PlayerController : MonoBehaviour
                     inventory.AddItem(itemClone);
 
                     // Destroy(hit.transform.gameObject);  
-                    // ¿©±â°¡ ¹®Á¦. ¿ùµå¿¡¼­ »èÁ¦ÇØ ¹ö¸®¸é ÀÎº¥Åä¸®¿¡¼­ ÂüÁ¶°¡ ¾ÈµÊ. 
-                    // ÀÎº¥Åä¸®¿¡ Å¬·ÐÇØ¼­ ³Ö°í Å¬·ÐÇÑ ¾ÆÀÌÅÛÀ» ¼±ÅÃÇÏ´Â °ÍÀÌ ¾Æ´Ï¶ó
-                    // ¿ùµå¿¡ ³²¾Æ ÀÖ´Â °ÍÀ» °í¸£´Â °ÍÀÌ¶ó »èÁ¦µÈ ¿ÀºêÁ§Æ®¸¦ ÂüÁ¶ÇÏ°Ô µÊ.
+                    // ï¿½ï¿½ï¿½â°¡ ï¿½ï¿½ï¿½ï¿½. ï¿½ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½. 
+                    // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ö°ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½
+                    // ï¿½ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¶ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½.
 
                     Debug.Log($"{item.GetItemType()} ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
                 }

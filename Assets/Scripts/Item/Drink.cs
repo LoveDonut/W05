@@ -11,9 +11,10 @@ public class Drink : Item
         status = FindObjectOfType<Status>();
     }
 
-    public override void Use()
+    public override bool Use()
     {
         status.IncreaseSight();
+        return true;
     }
 
 }

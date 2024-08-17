@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class FlashLight : Item
 {
-    [SerializeField] GameObject spotLight;
+    Light spotLight;
 
-    public override void Use()
+    public override bool Use()
     {
-        spotLight.SetActive(!spotLight.activeInHierarchy);
+        spotLight = GameObject.Find("Main Camera").GetComponentInChildren<Light>();
+        if (spotLight != null)
+        {
+            spotLight.enabled = !spotLight.enabled;
+        }
 
-        Debug.Log("flash turn on/off!");
+        return false;
     }
 
+    public void TurnOff()
+    {
+        spotLight = GameObject.Find("Main Camera").GetComponentInChildren<Light>();
+        if (spotLight != null)
+        {
+            spotLight.enabled = false;
+        }
+    }
 }

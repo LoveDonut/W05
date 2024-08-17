@@ -5,13 +5,13 @@ using UnityEngine;
 public class KeyCard : Item
 {
     PlayerController playerController;
-    public override void Use()
+    public override bool Use()
     {
         playerController = FindObjectOfType<PlayerController>();
         if (playerController == null)
         {
             Debug.Log("No PlayerController...");
-            return;
+            return false;
         }
         Ray ray = playerController.ray;
         RaycastHit hit;
@@ -28,8 +28,11 @@ public class KeyCard : Item
                 {
                     Debug.Log("잠긴 문 해제");
                     lockDoor.Unlock();
+                    return true;
                 }
             }
         }
+
+        return false;
     }
 }
