@@ -5,6 +5,9 @@ using static UnityEditor.PlayerSettings;
 
 public class SoundManager : MonoBehaviour
 {
+    [SerializeField] AudioClip monsterSFXWhenOpenDoor;
+    [SerializeField] Vector3 monsterSFXPos;
+
     AudioSource audioSource;
 
     #region PrivateMethods
@@ -46,6 +49,12 @@ public class SoundManager : MonoBehaviour
     {
         StartCoroutine(RepeatSound(audioClip, pos, time));
     }
+
+    public void PlayMonsterSoundWhenOpenDoor()
+    {
+        PlaySoundOnce(monsterSFXWhenOpenDoor, monsterSFXPos);
+    }
+
 
     IEnumerator RepeatSound(AudioClip audioClip, Vector3 pos, float time)
     {

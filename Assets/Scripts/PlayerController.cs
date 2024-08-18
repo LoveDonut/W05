@@ -74,6 +74,13 @@ public class PlayerController : MonoBehaviour
     // Ladder
     private Transform ladderTransform;      // current ladder transform
 
+    // Camera Shake
+    [SerializeField] float shakeDuration = 1f;
+    [SerializeField] float shakeMagnitude = 0.1f;
+    [SerializeField] float dampingSpeed = 1.0f;
+    float currentShakeDuration;
+    Vector3 adjustedCameraPos;
+
 
     private void Awake()
     {
@@ -142,6 +149,15 @@ public class PlayerController : MonoBehaviour
         // Adjust character height and camera position based on crouch state
         AdjustHeight();
 
+        if (Input.GetKeyDown(KeyCode.CapsLock))
+        {
+            StartCameraShake();
+        }
+
+        // Shake Camera
+        ShakeCamera();
+
+
         if (isClimbing)
         {
             HandleLadderMovement();
@@ -154,6 +170,25 @@ public class PlayerController : MonoBehaviour
             // Select Item
             OnSelectItem();
         }
+    }
+
+    private void ShakeCamera()
+    {
+        if (currentShakeDuration > 0)
+        {
+            cameraTransform.localPosition = adjustedCameraPos + Random.insideUnitSphere * shakeMagnitude;
+            currentShakeDuration -= Time.deltaTime * dampingSpeed;
+        }
+        else
+        {
+            currentShakeDuration = 0f;
+            cameraTransform.localPosition = adjustedCameraPos;
+        }
+    }
+
+    public void StartCameraShake()
+    {
+        currentShakeDuration = shakeDuration;
     }
 
     private void FixedUpdate()
@@ -306,7 +341,8 @@ public class PlayerController : MonoBehaviour
 
         float cameraOffset = isCrouching ? 0.5f : 1.1f;
         // Adjust the camera position based on character's height
-        cameraTransform.localPosition = new Vector3(cameraTransform.localPosition.x, heightOffset + cameraOffset, cameraTransform.localPosition.z);
+        adjustedCameraPos = new Vector3(0f, heightOffset + cameraOffset, 0f);
+        cameraTransform.localPosition = adjustedCameraPos;
         // stand y: 1.6, crouch y : 0.5
     }
 

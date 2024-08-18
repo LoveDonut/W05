@@ -27,7 +27,7 @@ public class KeyCard : Item
                 if ((lockDoor.GetDoorType() == LockDoor.EDoorType.ExitDoor))
                 {
                     Debug.Log("잠긴 문 해제");
-                    lockDoor.Unlock();
+                    lockDoor.Unlock(false);
                     return true;
                 }
             }

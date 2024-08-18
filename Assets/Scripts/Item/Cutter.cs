@@ -24,7 +24,7 @@ public class Cutter : Item
                 if ((lockDoor.GetDoorType() == LockDoor.EDoorType.CutterDoor))
                 {
                     Debug.Log("잠긴 문 해제");
-                    lockDoor.Unlock();
+                    lockDoor.Unlock(false);
                     return true;
                 }
             }
