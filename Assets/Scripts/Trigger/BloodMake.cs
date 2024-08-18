@@ -1,0 +1,16 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BloodMake : LightEvent
+{
+    [Header("트리거 작동시 활성화할 오브젝트")]
+    public GameObject[] bloods;
+    public override void TriggerLightEvent()
+    {
+        foreach (GameObject blood in bloods)
+        {
+            blood.SetActive(true);
+        }
+    }
+}
