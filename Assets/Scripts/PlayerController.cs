@@ -9,7 +9,7 @@ using static System.Collections.Specialized.BitVector32;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 3f;
-    public float runSpeed = 5f;
+    public float runSpeed = 6f;
     public float crouchSpeed = 1.5f;
     public float climbSpeed = 2f;
     public float gravity = -9.81f;
@@ -437,7 +437,7 @@ public class PlayerController : MonoBehaviour
                 if (moveSource.clip != runClip || !moveSource.isPlaying)
                 {
                     moveSource.clip = runClip;
-                    moveSource.volume = 0.3f;
+                    moveSource.volume = 0.1f;
                     moveSource.Play();
                 }
             }
@@ -446,7 +446,7 @@ public class PlayerController : MonoBehaviour
                 if (moveSource.clip != walkClip || !moveSource.isPlaying)
                 {
                     moveSource.clip = walkClip;
-                    moveSource.volume = 1.5f;
+                    moveSource.volume = 1f;
                     moveSource.Play();
                 }
             }
@@ -466,7 +466,7 @@ public class PlayerController : MonoBehaviour
                 //breathSource.Stop();
                 // 숨소리 클립 재생
                 breathSource.clip = breathClip;
-                //audioSource.volume = 0.5f;  // 소리의 크기를 50%로 줄임
+                breathSource.volume = 0.3f;  // 소리의 크기를 50%로 줄임
                 breathSource.pitch = 1f;     // 기본 배속
                 breathSource.Play();
             }

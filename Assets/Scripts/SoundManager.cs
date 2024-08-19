@@ -43,6 +43,11 @@ public class SoundManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(audioClip, pos);
     }
 
+    public void PlaySoundOnce(AudioClip audioClip, Vector3 pos, float vol)
+    {
+        AudioSource.PlayClipAtPoint(audioClip, pos, vol);
+    }
+
     public void PlaySoundForSeconds(AudioClip audioClip, Vector3 pos, float time)
     {
         StartCoroutine(RepeatSound(audioClip, pos, time));
