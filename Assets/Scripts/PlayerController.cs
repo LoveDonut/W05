@@ -74,6 +74,13 @@ public class PlayerController : MonoBehaviour
     // Ladder
     private Transform ladderTransform;      // current ladder transform
 
+    // Audio
+    private AudioSource moveSource;
+    private AudioSource breathSource;
+    [SerializeField] private AudioClip walkClip;
+    [SerializeField] private AudioClip runClip;
+    [SerializeField] private AudioClip breathClip;
+    
     // Camera Shake
     [SerializeField] float shakeDuration = 1f;
     [SerializeField] float shakeMagnitude = 0.1f;
@@ -91,6 +98,10 @@ public class PlayerController : MonoBehaviour
         status = GetComponent<Status>();
         // Connect Inventory component
         inventory = GetComponent<Inventory>();
+        // AudioSource component
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        moveSource = audioSources[0];
+        breathSource = audioSources[1];
 
         // Fixing and hiding the cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -169,6 +180,10 @@ public class PlayerController : MonoBehaviour
             // Select Item
             OnSelectItem();
         }
+
+        HandleMovementSound();
+
+        HandleBreathSound();
     }
 
     private void ShakeCamera()
@@ -413,4 +428,48 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void HandleMovementSound()
+    {
+        if (characterController.isGrounded && moveDirection.magnitude > 0)
+        {
+            if (isRunning && status.CanRunning)
+            {
+                if (moveSource.clip != runClip || !moveSource.isPlaying)
+                {
+                    moveSource.clip = runClip;
+                    moveSource.volume = 0.3f;
+                    moveSource.Play();
+                }
+            }
+            else
+            {
+                if (moveSource.clip != walkClip || !moveSource.isPlaying)
+                {
+                    moveSource.clip = walkClip;
+                    moveSource.volume = 1.5f;
+                    moveSource.Play();
+                }
+            }
+        }
+        else if (moveSource.isPlaying)
+        {
+            moveSource.Stop();
+        }
+    }
+
+    private void HandleBreathSound()
+    {
+        if (!status.CanRunning) // CanRunning이 false일 때
+        {
+            if (breathSource.clip != breathClip || !breathSource.isPlaying)
+            {
+                //breathSource.Stop();
+                // 숨소리 클립 재생
+                breathSource.clip = breathClip;
+                //audioSource.volume = 0.5f;  // 소리의 크기를 50%로 줄임
+                breathSource.pitch = 1f;     // 기본 배속
+                breathSource.Play();
+            }
+        }
+    }
 }
