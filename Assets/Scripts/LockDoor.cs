@@ -93,7 +93,15 @@ public class LockDoor : Door
         if (!isInBasement)
         {
             AudioSource.PlayClipAtPoint(eventSFX, transform.position);
-            Invoke("PlayMonsterSound", eventSFX.length * 1.5f);
+//            Invoke("PlayEventSound", eventSFX.length * 1.5f);
+        }
+        if (doorType == EDoorType.CutterDoor)
+        {
+            Transform chain = transform.Find("Chain");
+            if (chain != null)
+            {
+                chain.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -103,10 +111,12 @@ public class LockDoor : Door
         isLock = true;
     }
 
-    void PlayMonsterSound()
+    /*
+    void PlayEventSound()
     {
-        soundManager.PlayMonsterSoundWhenOpenDoor();
+        soundManager.PlayMonsterSound();
     }
+    */
 
     public EDoorType GetDoorType()
     {

@@ -262,7 +262,7 @@ MonoBehaviour:
   itemType: 2
   itemSprite: {fileID: 21300000, guid: ecf4ca949b53d2147bfabb0ce13e0150, type: 3}
   getSound: {fileID: 8300000, guid: 0facd91fe45bb453ea3e1a0e79ba52b0, type: 3}
-  useSound: {fileID: 0}
+  useSound: {fileID: 8300000, guid: 9ee2bbf3911a4448bbcbb25e6e57c892, type: 3}
 --- !u!65 &1920667613123035066
 BoxCollider:
   m_ObjectHideFlags: 0

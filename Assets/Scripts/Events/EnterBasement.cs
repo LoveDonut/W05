@@ -65,6 +65,11 @@ public class EnterBasement : MonoBehaviour
         basementDoor.Unlock(true); // unlock door
         soundManager.PlayBackgroundSound(backroomSFX);
 
+        Invoke("TurnOnBlockCube", 1f);
+    }
+
+    void TurnOnBlockCube()
+    {
         foreach (GameObject blockedCube in blockedCubes)
         {
             blockedCube.SetActive(true);
