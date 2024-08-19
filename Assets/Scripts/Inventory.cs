@@ -101,7 +101,7 @@ public class Inventory : MonoBehaviour
         GameObject newGrid = Instantiate(itemGrid, itemUIPanel);
         Instantiate(item.GetComponent<Item>().GetItemOnUI(), newGrid.transform.position, Quaternion.identity, newGrid.transform);
 
-        Debug.Log($"���� ������ : {item.GetComponent<Item>().GetItemType()}");
+        Debug.Log($"Items Acquired : {item.GetComponent<Item>().GetItemType()}");
 
         UpdateInventoryUI();
 

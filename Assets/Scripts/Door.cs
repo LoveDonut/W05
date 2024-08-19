@@ -5,31 +5,72 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     protected bool isOpen = false;
+    protected bool isRotating = false;
+
+    protected float rotationSpeed = 4f;
+    protected float rotationAngle = 90f;
 
     public virtual void ToggleDoor()
     {
-        if (isOpen)
+        if (!isRotating)
         {
-            CloseDoor();
+            if (isOpen)
+            {
+                StartCoroutine(CloseDoor());
+            }
+            else
+            {
+                StartCoroutine(OpenDoor());
+            }
+            isOpen = !isOpen;
         }
-        else
-        {
-            OpenDoor();
-        }
-        isOpen = !isOpen;
     }
 
-    protected virtual void OpenDoor()
+    protected virtual IEnumerator OpenDoor()
     {
-        Debug.Log("열림");
-        // 문을 여는 애니메이션이나 로직을 구현
-        transform.Rotate(Vector3.up, 90f); // 예시로 90도 회전
+        isRotating = true;
+
+        Debug.Log("The Door Opened");
+        Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles + Vector3.up * rotationAngle);
+
+        // collision avoidance
+        gameObject.GetComponent<BoxCollider>().enabled = false;
+
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            yield return null; // wait until next frame
+        }
+
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+
+        // error correction
+        transform.rotation = targetRotation;
+
+        isRotating = false;
     }
 
-    protected virtual void CloseDoor()
+    protected virtual IEnumerator CloseDoor()
     {
-        Debug.Log("닫힘");
-        // 문을 닫는 애니메이션이나 로직을 구현
-        transform.Rotate(Vector3.up, -90f); // 예시로 -90도 회전
+        isRotating = true;
+
+        Debug.Log("The Door Closed");
+        Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles - Vector3.up * rotationAngle);
+
+        // collision avoidance
+        gameObject.GetComponent<BoxCollider>().enabled = false;
+
+        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            yield return null; // wait until next frame
+        }
+        
+        gameObject.GetComponent<BoxCollider>().enabled = true;
+
+        // error correction
+        transform.rotation = targetRotation;
+
+        isRotating = false;
     }
 }
