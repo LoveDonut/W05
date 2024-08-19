@@ -288,6 +288,7 @@ public class PlayerController : MonoBehaviour
         {
             if (playerInput.actions["SelectItem" + i].triggered)
             {
+                Debug.Log(i + " slot");
                 inventory.SelectItem(i - 1); // Index starts from 0
                 return;
             }
@@ -295,6 +296,7 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.actions["SelectItem0"].triggered)
         {
+            Debug.Log("0 slot");
             inventory.SelectItem(9); // 0 corresponds to the 9th index
         }
     }
