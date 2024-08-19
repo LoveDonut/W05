@@ -14,6 +14,7 @@ public class EnterBasement : MonoBehaviour
     [SerializeField] AudioClip horrorSFX;
     [SerializeField] AudioClip backroomSFX;
     [SerializeField] GameObject[] blockedCubes;
+    [SerializeField] LightManager[] lightManagers;
 
     SoundManager soundManager;
     
@@ -36,7 +37,10 @@ public class EnterBasement : MonoBehaviour
         soundManager.PlayBackgroundSound(horrorSFX);
 
         //TODO : Turn off light
-
+        foreach (LightManager lightManager in lightManagers)
+        {
+            lightManager.TurnOffLights();
+        }
         //
 
         Invoke("LightOn", lightOfftime);
@@ -49,7 +53,10 @@ public class EnterBasement : MonoBehaviour
         soundManager.StopBackgroundSound();
 
         //TODO : Turn on light
-
+        foreach (LightManager lightManager in lightManagers)
+        {
+            lightManager.TurnOnLights();
+        }
         //
     }
 

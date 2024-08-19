@@ -26,5 +26,6 @@ public class BlackOut : LightEvent
             else 
                 CallTurnOnLights();
         }
+        Destroy(gameObject);
     }
 }
