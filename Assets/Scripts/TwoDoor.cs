@@ -29,6 +29,7 @@ public class TwoDoor : LockDoor
         if (isLock)
         {
             Debug.Log("The Door is Locked");
+            AudioSource.PlayClipAtPoint(lockedSFX, transform.position);
             return;
         }
 
@@ -92,7 +93,38 @@ public class TwoDoor : LockDoor
         if (doorType == EDoorType.ExitDoor)
         {
             //base.OpenDoor();
-            yield return StartCoroutine(base.OpenDoor());
+            //yield return StartCoroutine(base.OpenDoor());
+            isRotating = true;
+
+            Debug.Log("The Door Opened");
+
+            soundManager.PlaySoundOnce(doorOpenSFX, transform.position);
+
+            Quaternion leftTargetRotation = Quaternion.Euler(leftDoor.transform.eulerAngles + Vector3.up * rotationAngle);
+            Quaternion rightTargetRotation = Quaternion.Euler(rightDoor.transform.eulerAngles - Vector3.up * rotationAngle);
+
+            // collision avoidance
+            leftDoor.GetComponent<BoxCollider>().enabled = false;
+            rightDoor.GetComponent<BoxCollider>().enabled = false;
+
+            while (Quaternion.Angle(leftDoor.transform.rotation, leftTargetRotation) > 0.1f)
+            {
+                leftDoor.transform.rotation = Quaternion.Lerp(leftDoor.transform.rotation, leftTargetRotation, Time.deltaTime * rotationSpeed);
+                rightDoor.transform.rotation = Quaternion.Lerp(rightDoor.transform.rotation, rightTargetRotation, Time.deltaTime * rotationSpeed);
+                yield return null; // wait until next frame
+            }
+            //Debug.Log("반복문 끝");
+
+            leftDoor.GetComponent<BoxCollider>().enabled = true;
+            rightDoor.GetComponent<BoxCollider>().enabled = true;
+
+            // error correction
+            leftDoor.transform.rotation = leftTargetRotation;
+            rightDoor.transform.rotation = rightTargetRotation;
+
+            isRotating = false;
+
+            Debug.Log("Game Clear!!!!!");
         }
         else        // default door
         {
@@ -115,7 +147,7 @@ public class TwoDoor : LockDoor
                 rightDoor.transform.rotation = Quaternion.Lerp(rightDoor.transform.rotation, rightTargetRotation, Time.deltaTime * rotationSpeed);
                 yield return null; // wait until next frame
             }
-            Debug.Log("반복문 끝");
+            //Debug.Log("반복문 끝");
 
             leftDoor.GetComponent<BoxCollider>().enabled = true;
             rightDoor.GetComponent<BoxCollider>().enabled = true;

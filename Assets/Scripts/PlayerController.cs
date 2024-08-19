@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     private float cameraRotationX = 0f;     // Current X-axis rotation state of the camera
     public float minCameraAngle = -60f;     // Maximum angle at which the camera can view upwards
     public float maxCameraAngle = 40f;      // Maximum angle at which the camera can look down
-    public float lookSensitivity = 0.1f;    // Camera sensitivity
+    public float lookSensitivity = 0.03f;    // Camera sensitivity
     public float lookSmoothSpeed = 0.1f;    // Adjust for smoothness
     public float yRotationSmoothSpeed = 1f; // Smoothness for Y-axis rotation
 
@@ -430,7 +430,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovementSound()
     {
-        if (characterController.isGrounded && moveDirection.magnitude > 0)
+        if (moveDirection.magnitude > 0)
         {
             if (isRunning && status.CanRunning)
             {

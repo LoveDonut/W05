@@ -402,7 +402,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 1928942596453182773}
   minCameraAngle: -60
   maxCameraAngle: 60
-  lookSensitivity: 0.1
+  lookSensitivity: 0.03
   lookSmoothSpeed: 0.1
   yRotationSmoothSpeed: 1
   crouchHeight: 1
@@ -413,6 +413,9 @@ MonoBehaviour:
   walkClip: {fileID: 8300000, guid: 4d92294c3da3fd848adb59ba8128e70c, type: 3}
   runClip: {fileID: 8300000, guid: 398a631f92a5b2e4fbbf36e67e05e653, type: 3}
   breathClip: {fileID: 8300000, guid: 5ab03f7373d2bf04296423f8d4edea69, type: 3}
+  shakeDuration: 1
+  shakeMagnitude: 0.1
+  dampingSpeed: 1
 --- !u!143 &2436880528308343332
 CharacterController:
   m_ObjectHideFlags: 0
