@@ -43,7 +43,7 @@ public class Door : MonoBehaviour
 
         Debug.Log("The Door Opened");
 
-        soundManager.PlaySoundOnce(doorOpenSFX, transform.position);
+        soundManager.PlaySoundOnce(doorOpenSFX, transform.position, 0.5f);
 
         Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles + Vector3.up * rotationAngle);
 
@@ -70,7 +70,7 @@ public class Door : MonoBehaviour
 
         Debug.Log("The Door Closed");
 
-        soundManager.PlaySoundOnce(doorCloseSFX, transform.position);
+        soundManager.PlaySoundOnce(doorCloseSFX, transform.position, 0.5f);
 
         Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles - Vector3.up * rotationAngle);
 
