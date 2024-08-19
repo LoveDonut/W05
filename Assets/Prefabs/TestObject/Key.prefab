@@ -115,6 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1143952530141323895}
   - component: {fileID: -5760007501463733176}
+  - component: {fileID: 8016063784711767150}
   m_Layer: 0
   m_Name: Key
   m_TagString: Untagged
@@ -154,9 +155,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 1
-  ItemOnUI: {fileID: 0}
-  getSound: {fileID: 0}
-  useSound: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: bf10f61c01aa43447b3b9be0e38911ef, type: 3}
+  getSound: {fileID: 8300000, guid: 0facd91fe45bb453ea3e1a0e79ba52b0, type: 3}
+  useSound: {fileID: 8300000, guid: dd532fdb2a61e4cc5bc727f3b32a69a8, type: 3}
+--- !u!65 &8016063784711767150
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050031254995181659}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.2007923, y: 0.99999976, z: 1.8146405}
+  m_Center: {x: 0, y: 5, z: 0.4}
 --- !u!1 &6345775456368856970
 GameObject:
   m_ObjectHideFlags: 0

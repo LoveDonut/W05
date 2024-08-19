@@ -425,6 +425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2035129059819445436}
   - component: {fileID: 5371665179552991803}
+  - component: {fileID: 988890731391742397}
   m_Layer: 0
   m_Name: flashLight
   m_TagString: Untagged
@@ -465,9 +466,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 4
-  ItemOnUI: {fileID: 0}
-  getSound: {fileID: 0}
-  useSound: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 0d70eebfed0631845b49b04b2c097553, type: 3}
+  getSound: {fileID: 8300000, guid: b6210867de7794e3b997a07ef5fc3f0b, type: 3}
+  useSound: {fileID: 8300000, guid: c5de695e210543640ae9dd8815af326d, type: 3}
+--- !u!65 &988890731391742397
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295141779316179176}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1.6870937}
+  m_Center: {x: 0, y: 0, z: 0.13355732}
 --- !u!1 &9201729541770267930
 GameObject:
   m_ObjectHideFlags: 0
