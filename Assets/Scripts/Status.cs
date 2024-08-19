@@ -60,6 +60,7 @@ public class Status : MonoBehaviour
             if (flashlight.enabled)
             {
                 flashlight.intensity -= flashlightDecreaseRate * Time.deltaTime;
+                flashlight.intensity = Mathf.Clamp(flashlight.intensity, 0.1f, 1f);
             }
         }
     }
@@ -72,6 +73,13 @@ public class Status : MonoBehaviour
         }
     }
 
+    public void IncreaseLight()
+    {
+        if (flashlight != null)
+        {
+            flashlight.intensity = 1;
+        }
+    }
     public void IncreaseSight()
     {
         if (vignette != null)

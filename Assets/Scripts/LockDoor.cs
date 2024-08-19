@@ -17,6 +17,7 @@ public class LockDoor : Door
 
     [SerializeField] protected EDoorType doorType;
     protected bool isLock;
+    bool isInBasement;
 
     void Start()
     {
@@ -69,7 +70,11 @@ public class LockDoor : Door
     {
         if (doorType != EDoorType.ExitDoor)
         {
-            //base.OpenDoor();
+            if (!isInBasement)
+            {
+                AudioSource.PlayClipAtPoint(eventSFX, transform.position);
+            }
+
             yield return StartCoroutine (base.OpenDoor());
         }
         else
@@ -81,13 +86,9 @@ public class LockDoor : Door
 
     public void Unlock(bool isInBasement)
     {
+        this.isInBasement = isInBasement;
         isLock = false;
         OpenDoor();
-        if (!isInBasement)
-        {
-            AudioSource.PlayClipAtPoint(eventSFX, transform.position);
-//            Invoke("PlayEventSound", eventSFX.length * 1.5f);
-        }
         if (doorType == EDoorType.CutterDoor)
         {
             Transform chain = transform.Find("Chain");
@@ -108,7 +109,7 @@ public class LockDoor : Door
 
     public void Lock()
     {
-        CloseDoor();
+        StartCoroutine(CloseDoor());
         isLock = true;
     }
 
@@ -127,6 +128,11 @@ public class LockDoor : Door
     private IEnumerator OldDoorFall()
     {
         Debug.Log("Old Iron Door is falling.");
+
+        if (!isInBasement)
+        {
+            AudioSource.PlayClipAtPoint(eventSFX, transform.position);
+        }
 
         Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles + Vector3.left * 90f);
 

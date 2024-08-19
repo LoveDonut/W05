@@ -12,7 +12,8 @@ public abstract class Item : MonoBehaviour
         Cutter,
         Drink,
         Flashlight,
-        KeyCard
+        KeyCard,
+        Battery
     }
 
     [SerializeField] protected EItemType itemType;
