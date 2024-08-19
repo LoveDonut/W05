@@ -92,6 +92,17 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+        else if (itemType == Item.EItemType.Flashlight)
+        {
+            FlashLight[] flashlights = FindObjectsOfType<FlashLight>();
+            if (flashlights.Length > 0)
+            {
+                foreach (FlashLight flashlight in flashlights)
+                {
+                    flashlight.gameObject.SetActive(false);
+                }
+            }
+        }
 
         UpdateInventoryUI();
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BloodMake : LightEvent
 {
     SoundManager soundManager;
+    PlayerController playerController;
     [SerializeField] AudioClip monsterSound;
     [SerializeField] Vector3 stairPosition;
 
@@ -14,6 +15,7 @@ public class BloodMake : LightEvent
     void Awake()
     {
         soundManager = FindObjectOfType<SoundManager>();
+        playerController = FindObjectOfType<PlayerController>();
     }
     public override void TriggerLightEvent()
     {
@@ -26,5 +28,8 @@ public class BloodMake : LightEvent
 
         // Turn on sound
         soundManager.PlayMonsterSound();
+
+        // shake camera
+        playerController.StartCameraShake();
     }
 }
