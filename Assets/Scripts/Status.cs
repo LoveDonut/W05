@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
@@ -18,11 +19,14 @@ public class Status : MonoBehaviour
     [SerializeField] PostProcessVolume postProcessVolume;
     Vignette vignette;
 
+    [SerializeField] float flashlightDecreaseRate = 1f;
+    [SerializeField] Light flashlight;
+
     float currentStamina;
     float elapsedTime = 0f;
-
     // Can't running when stamina becomes 0
     public bool CanRunning { get; private set; }
+    public bool IsStart { get; set; }
 
     private void Awake()
     {
@@ -31,6 +35,7 @@ public class Status : MonoBehaviour
 
     private void Start()
     {
+        IsStart = false;
         currentStamina = maxStamina;
         CanRunning = true;
 
@@ -45,11 +50,23 @@ public class Status : MonoBehaviour
     {
         DecreaseSightByTime();
         ChangeStamina();
+        DecreaseFlashlightIntensity();
+    }
+
+    private void DecreaseFlashlightIntensity()
+    {
+        if (flashlight != null)
+        {
+            if (flashlight.enabled)
+            {
+                flashlight.intensity -= flashlightDecreaseRate * Time.deltaTime;
+            }
+        }
     }
 
     void DecreaseSightByTime()
     {
-        if (vignette != null)
+        if (vignette != null && IsStart)
         {
             vignette.intensity.value = Mathf.Clamp(vignette.intensity.value + mentalityDecreaseRate * Time.deltaTime, 0f, 1f);
         }
