@@ -33,12 +33,7 @@ public class Door : MonoBehaviour
             }
             isOpen = !isOpen;
         }
-        else
-        {
-            OpenDoor();
-        }
         soundManager.PlaySoundOnce(doorSFX, transform.position);
-        isOpen = !isOpen;
     }
 
     protected virtual IEnumerator OpenDoor()
