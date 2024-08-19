@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] GameObject itemGrid;
     [SerializeField] Transform itemUIPanel;
-    List<GameObject> inventory;
+    public List<GameObject> inventory;
     SoundManager soundManager;
 
     // default : -1 when not selected 
