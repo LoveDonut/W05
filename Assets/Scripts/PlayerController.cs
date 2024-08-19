@@ -81,7 +81,6 @@ public class PlayerController : MonoBehaviour
     float currentShakeDuration;
     Vector3 adjustedCameraPos;
 
-
     private void Awake()
     {
         // Character Controller component
@@ -289,7 +288,6 @@ public class PlayerController : MonoBehaviour
         {
             if (playerInput.actions["SelectItem" + i].triggered)
             {
-                Debug.Log(i + " ����");
                 inventory.SelectItem(i - 1); // Index starts from 0
                 return;
             }
@@ -297,7 +295,6 @@ public class PlayerController : MonoBehaviour
 
         if (playerInput.actions["SelectItem0"].triggered)
         {
-            Debug.Log("0 ����");
             inventory.SelectItem(9); // 0 corresponds to the 9th index
         }
     }
@@ -356,18 +353,15 @@ public class PlayerController : MonoBehaviour
         // Check if the ray hits any object within the interaction distance
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {
-//            Debug.Log("����");
             // Check if the hit object has a Door component
             Door door = hit.transform.GetComponent<Door>();
             if (door != null)
             {
-//                Debug.Log("�� ����");
                 currentDoor = door;
 
                 // If the interaction button is pressed, toggle the door state
                 if (interactionAction.triggered)
                 {
-                    Debug.Log("��ȣ�ۿ� Ű ����");
                     door.ToggleDoor();
                 }
             }
@@ -380,7 +374,6 @@ public class PlayerController : MonoBehaviour
             Item item = hit.transform.GetComponent<Item>();
             if (item != null)
             {
-                Debug.Log("��������");
 
                 // If the interaction button is pressed, add the item to the inventory
                 if (interactionAction.triggered)
@@ -394,13 +387,6 @@ public class PlayerController : MonoBehaviour
 
                     // Add the cloned item to the inventory
                     inventory.AddItem(itemClone);
-
-                    // Destroy(hit.transform.gameObject);  
-                    // ���Ⱑ ����. ���忡�� ������ ������ �κ��丮���� ������ �ȵ�. 
-                    // �κ��丮�� Ŭ���ؼ� �ְ� Ŭ���� �������� �����ϴ� ���� �ƴ϶�
-                    // ���忡 ���� �ִ� ���� ������ ���̶� ������ ������Ʈ�� �����ϰ� ��.
-
-                    Debug.Log($"{item.GetItemType()} �������� �κ��丮�� �߰��Ǿ����ϴ�.");
                 }
             }
 

@@ -20,11 +20,13 @@ public class StartEnterBasement : MonoBehaviour
     {
         basementDoor.Lock(); // close door
         AudioSource.PlayClipAtPoint(doorCloseSFX, basementDoor.transform.position);
-
+       
         if (enterBasement != null) 
         {
-            enterBasement.StartMonsterMove();
+            //enterBasement.StartMonsterMove();
+            enterBasement.EventOccur();
         }
+        
         Destroy(gameObject);
     }
 }

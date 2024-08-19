@@ -6,8 +6,6 @@ public class LockDoor : Door
 {
     [SerializeField] AudioClip lockedSFX;
     [SerializeField] AudioClip eventSFX;
-
-    SoundManager soundManager;
     public enum EDoorType 
     {
         KeyDoor,
@@ -18,11 +16,6 @@ public class LockDoor : Door
 
     [SerializeField] EDoorType doorType;
     bool isLock;
-
-    void Awake()
-    {
-        soundManager = FindObjectOfType<SoundManager>();
-    }
 
     void Start()
     {
