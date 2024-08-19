@@ -14,6 +14,7 @@ public class Cutter : Item
         }
         Ray ray = playerController.ray;
         RaycastHit hit;
+        Debug.Log("커터 사용");
 
         if (Physics.Raycast(ray, out hit, playerController.interactionDistance, LayerMask.GetMask("LockDoor")))
         {
@@ -24,7 +25,7 @@ public class Cutter : Item
                 if ((lockDoor.GetDoorType() == LockDoor.EDoorType.CutterDoor))
                 {
                     Debug.Log("잠긴 문 해제");
-                    lockDoor.Unlock(false);
+                    lockDoor.Unlock(true);
                     return true;
                 }
             }
