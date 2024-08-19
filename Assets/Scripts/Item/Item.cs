@@ -16,7 +16,7 @@ public abstract class Item : MonoBehaviour
     }
 
     [SerializeField] protected EItemType itemType;
-    [SerializeField] protected GameObject ItemOnUI;
+    [SerializeField] protected Sprite itemSprite;
     [Header("Sounds")]
     public AudioClip getSound;
     public AudioClip useSound;
@@ -33,8 +33,8 @@ public abstract class Item : MonoBehaviour
         return itemType;
     }
 
-    public GameObject GetItemOnUI()
+    public Sprite GetItemSprite()
     {
-        return ItemOnUI; 
+        return itemSprite; 
     }
 }
