@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2040152129072576814}
   - component: {fileID: 7927630888629359848}
   - component: {fileID: 6619329931072633295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TestTwoDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,6 @@ MonoBehaviour:
   lockedSFX: {fileID: 8300000, guid: 6ed0f8509e9e44272a85f74fdc61879b, type: 3}
   eventSFX: {fileID: 0}
   doorType: 3
-  isLock: 0
   leftDoor: {fileID: 0}
   rightDoor: {fileID: 0}
 --- !u!65 &6619329931072633295

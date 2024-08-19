@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LockDoor : Door
 {
-    [SerializeField] AudioClip lockedSFX;
-    [SerializeField] AudioClip eventSFX;
+    [SerializeField] protected AudioClip lockedSFX;
+    [SerializeField] protected AudioClip eventSFX;
     public enum EDoorType 
     {
         KeyDoor,
