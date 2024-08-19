@@ -47,6 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f56bb83f4b44ec248b1132d810f75837, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorOpenSFX: {fileID: 8300000, guid: a28f6a5e4a4439f4e930b27411df5367, type: 3}
+  doorCloseSFX: {fileID: 8300000, guid: df91b36295a5385488d48b037f299cad, type: 3}
+  lockedSFX: {fileID: 8300000, guid: 6ed0f8509e9e44272a85f74fdc61879b, type: 3}
+  eventSFX: {fileID: 0}
   doorType: 3
   isLock: 0
   leftDoor: {fileID: 0}
