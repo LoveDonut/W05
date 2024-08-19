@@ -398,6 +398,11 @@ public class PlayerController : MonoBehaviour
                     // Clone the item before adding it to the inventory
                     GameObject itemClone = Instantiate(item.gameObject);
 
+                    if(item.isInFour)
+                    {
+                        item.StartEvent();
+                    }
+
                     // Disable the original item so it's no longer visible in the world
                     item.gameObject.SetActive(false);
                     itemClone.SetActive(false);

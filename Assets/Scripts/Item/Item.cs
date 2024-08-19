@@ -18,13 +18,20 @@ public abstract class Item : MonoBehaviour
 
     [SerializeField] protected EItemType itemType;
     [SerializeField] protected Sprite itemSprite;
+    public bool isInFour;
     [Header("Sounds")]
     public AudioClip getSound;
     public AudioClip useSound;
 
-
+    FourEventTrigger fourEventTrigger;
 
     public abstract bool Use();
+
+    public void StartEvent()
+    {
+        fourEventTrigger = FindObjectOfType<FourEventTrigger>();
+        fourEventTrigger.TriggerLightEvent();
+    }
 
     public EItemType GetItemType()
     {

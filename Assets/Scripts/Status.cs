@@ -11,7 +11,7 @@ public class Status : MonoBehaviour
     [Header("Status")]
     //about player's max running time
     [SerializeField] float maxStamina = 10f;
-    [SerializeField] float staminaDecreaseRate = 2f;
+    public float staminaDecreaseRate = 2f;
     [SerializeField] float staminaCoolTime = 2f;
 
     //about player's vision size

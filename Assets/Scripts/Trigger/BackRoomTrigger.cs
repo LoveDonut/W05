@@ -41,6 +41,8 @@ public class BackRoomTrigger : LightEvent
             StartCoroutine(StartEnemyMove(enemys[i], paths[i]));
         }
         TrapDoor.SetActive(false);
+
+        Player.GetComponent<Status>().staminaDecreaseRate = 0f;
     }
 
     IEnumerator StartBackground()

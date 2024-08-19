@@ -7,6 +7,9 @@ public class TwoDoor : LockDoor
 {
     [SerializeField] GameObject leftDoor;
     [SerializeField] GameObject rightDoor;
+    [SerializeField] GameObject text;
+
+    Coroutine instance;
 
     private void Start()
     {
@@ -28,7 +31,14 @@ public class TwoDoor : LockDoor
         Debug.Log("양문 접근");
         if (isLock)
         {
-            Debug.Log("The Door is Locked");
+            if (text != null)
+            {
+                if (instance != null)
+                {
+                    StopCoroutine(instance);
+                }
+                instance = StartCoroutine(PopUpText());
+            }
             AudioSource.PlayClipAtPoint(lockedSFX, transform.position);
             return;
         }
@@ -45,6 +55,13 @@ public class TwoDoor : LockDoor
             }
             isOpen = !isOpen;
         }
+    }
+
+    IEnumerator PopUpText()
+    {
+        text.SetActive(true);
+        yield return new WaitForSeconds(5f);
+        text.SetActive(false);
     }
 
     protected override IEnumerator CloseDoor()
