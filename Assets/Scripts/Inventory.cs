@@ -99,7 +99,7 @@ public class Inventory : MonoBehaviour
 
         // show item on UI
         GameObject newGrid = Instantiate(itemGrid, itemUIPanel);
-        Instantiate(item.GetComponent<Item>().GetItemOnUI(), newGrid.transform.position, Quaternion.identity, newGrid.transform);
+        newGrid.transform.GetChild(0).GetComponent<Image>().sprite = item.GetComponent<Item>().GetItemSprite();
 
         Debug.Log($"Items Acquired : {item.GetComponent<Item>().GetItemType()}");
 
