@@ -11,19 +11,33 @@ public class BackRoomTrigger : LightEvent
     public GameObject fluorescentLight;
     public GameObject Player;
 
+
     [Header("EnemyChase")]
     public Transform hands;
     public GameObject[] enemys;
     public Transform[] paths;
     public float handsInterval = 0.5f;
     public float enemySpeed = 1f;
+    [SerializeField] AudioClip chaseSound;
+
+    SoundManager soundManager;
+
+    void Awake()
+    {
+        soundManager = FindObjectOfType<SoundManager>();
+    }
 
     public override void TriggerLightEvent()
     {
+        // turn off light noise
+        soundManager.StopBackgroundSound();
+        soundManager.PlayBackgroundSound(chaseSound);
+
         StartCoroutine(StartBackRoom());
         StartCoroutine(StartHandsOn());
         for(int i = 0; i < enemys.Length; i++)
         {
+            enemys[i].SetActive(true);
             StartCoroutine(StartEnemyMove(enemys[i], paths[i]));
         }
     }
