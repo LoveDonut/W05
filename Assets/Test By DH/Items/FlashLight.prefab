@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 4
-  ItemOnUI: {fileID: 441464692990416154, guid: 90967191fc0d931439af5bcb3d025feb, type: 3}
-  getSound: {fileID: 8300000, guid: 862e32085adc29949a12fee9d1ff11a0, type: 3}
+  itemSprite: {fileID: 0}
+  getSound: {fileID: 8300000, guid: b6210867de7794e3b997a07ef5fc3f0b, type: 3}
   useSound: {fileID: 8300000, guid: 4104495a448805b4e94dc83af000e0f6, type: 3}
 --- !u!136 &5738657410286922665
 CapsuleCollider:

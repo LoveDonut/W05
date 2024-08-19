@@ -6,7 +6,8 @@ public class Door : MonoBehaviour
 {
     // Sounds
     protected SoundManager soundManager;
-    [SerializeField] AudioClip doorSFX;
+    [SerializeField] protected AudioClip doorOpenSFX;
+    [SerializeField] protected AudioClip doorCloseSFX;
 
     protected bool isOpen = false;
     protected bool isRotating = false;
@@ -33,7 +34,7 @@ public class Door : MonoBehaviour
             }
             isOpen = !isOpen;
         }
-        soundManager.PlaySoundOnce(doorSFX, transform.position);
+        
     }
 
     protected virtual IEnumerator OpenDoor()
@@ -41,6 +42,9 @@ public class Door : MonoBehaviour
         isRotating = true;
 
         Debug.Log("The Door Opened");
+
+        soundManager.PlaySoundOnce(doorOpenSFX, transform.position);
+
         Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles + Vector3.up * rotationAngle);
 
         // collision avoidance
@@ -65,6 +69,9 @@ public class Door : MonoBehaviour
         isRotating = true;
 
         Debug.Log("The Door Closed");
+
+        soundManager.PlaySoundOnce(doorCloseSFX, transform.position);
+
         Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles - Vector3.up * rotationAngle);
 
         // collision avoidance

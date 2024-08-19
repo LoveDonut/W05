@@ -58,6 +58,9 @@ public class TwoDoor : LockDoor
             isRotating = true;
 
             Debug.Log("The Door Closed");
+
+            soundManager.PlaySoundOnce(doorCloseSFX, transform.position);
+
             Quaternion leftTargetRotation = Quaternion.Euler(leftDoor.transform.eulerAngles - Vector3.up * rotationAngle);
             Quaternion rightTargetRotation = Quaternion.Euler(rightDoor.transform.eulerAngles + Vector3.up * rotationAngle);
 
@@ -96,6 +99,9 @@ public class TwoDoor : LockDoor
             isRotating = true;
 
             Debug.Log("The Door Opened");
+
+            soundManager.PlaySoundOnce(doorOpenSFX, transform.position);
+
             Quaternion leftTargetRotation = Quaternion.Euler(leftDoor.transform.eulerAngles + Vector3.up * rotationAngle);
             Quaternion rightTargetRotation = Quaternion.Euler(rightDoor.transform.eulerAngles - Vector3.up * rotationAngle);
 
