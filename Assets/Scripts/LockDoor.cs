@@ -16,18 +16,11 @@ public class LockDoor : Door
     }
 
     [SerializeField] protected EDoorType doorType;
-    [SerializeField] protected bool isLock;
+    protected bool isLock;
 
     void Start()
     {
-        if(doorType == EDoorType.BasementDoor)
-        {
-            isLock = false;
-        }
-        else
-        {
-            isLock = true;
-        }
+        isLock = true;
     }
 
     public override void ToggleDoor()
@@ -101,6 +94,14 @@ public class LockDoor : Door
             if (chain != null)
             {
                 chain.gameObject.SetActive(false);
+            }
+        }
+        else if(doorType == EDoorType.KeyDoor)
+        {
+            Transform locker = transform.Find("Locker");
+            if (locker != null)
+            {
+                locker.gameObject.SetActive(false);
             }
         }
     }
