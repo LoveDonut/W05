@@ -26,7 +26,7 @@ public class Key : Item
                 if ((lockDoor.GetDoorType() == LockDoor.EDoorType.KeyDoor))
                 {
                     Debug.Log("잠긴 문 해제");
-                    lockDoor.Unlock();
+                    lockDoor.Unlock(false);
                     return true;
                 }
             }

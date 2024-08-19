@@ -11,9 +11,21 @@ public class BackRoomTrigger : LightEvent
     public GameObject fluorescentLight;
     public GameObject Player;
 
+    [Header("EnemyChase")]
+    public Transform hands;
+    public GameObject[] enemys;
+    public Transform[] paths;
+    public float handsInterval = 0.5f;
+    public float enemySpeed = 1f;
+
     public override void TriggerLightEvent()
     {
         StartCoroutine(StartBackRoom());
+        StartCoroutine(StartHandsOn());
+        for(int i = 0; i < enemys.Length; i++)
+        {
+            StartCoroutine(StartEnemyMove(enemys[i], paths[i]));
+        }
     }
 
     IEnumerator StartBackRoom()
@@ -26,5 +38,36 @@ public class BackRoomTrigger : LightEvent
         postProcessVolume.profile.GetSetting<AutoExposure>().enabled.value = true;
         Instantiate(fluorescentLight, new Vector3(Player.transform.position.x, Player.transform.position.y+5, Player.transform.position.z), Quaternion.identity);
         yield return new WaitForSeconds(1f);
+    }
+
+    IEnumerator StartHandsOn()
+    {
+        for(int i=0; i < hands.childCount; i++)
+        {
+            foreach (Transform hand in hands.GetChild(i))
+            {
+                hand.gameObject.SetActive(true);
+                yield return new WaitForSeconds(handsInterval);
+            }
+        }
+    }
+
+    IEnumerator StartEnemyMove(GameObject enemy, Transform path)
+    {
+        Vector3 goal = path.GetChild(0).transform.position;
+        int count = 1;
+        while(Vector3.Distance(enemy.transform.position, path.GetChild(path.childCount-1).transform.position) > 1f)
+        {
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, goal, Time.deltaTime * enemySpeed);
+            if(Vector3.Distance(enemy.transform.position, goal) < 1f)
+            {
+                if(count < path.childCount)
+                {
+                    goal = path.GetChild(count++).transform.position;
+                }
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
     }
 }

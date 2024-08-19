@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    // Sounds
+    protected SoundManager soundManager;
+    [SerializeField] AudioClip doorSFX;
+
     protected bool isOpen = false;
     protected bool isRotating = false;
 
     protected float rotationSpeed = 4f;
     protected float rotationAngle = 90f;
+
+    void Awake()
+    {
+        soundManager = FindObjectOfType<SoundManager>();
+    }
 
     public virtual void ToggleDoor()
     {
@@ -24,6 +33,12 @@ public class Door : MonoBehaviour
             }
             isOpen = !isOpen;
         }
+        else
+        {
+            OpenDoor();
+        }
+        soundManager.PlaySoundOnce(doorSFX, transform.position);
+        isOpen = !isOpen;
     }
 
     protected virtual IEnumerator OpenDoor()
