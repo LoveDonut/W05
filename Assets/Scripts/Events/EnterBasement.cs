@@ -63,7 +63,7 @@ public class EnterBasement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         basementDoor.Unlock(true); // unlock door
-        soundManager.PlayBackgroundSound(backroomSFX);
+        soundManager.PlayBackgroundSound(backroomSFX, 0.1f);
         status.IncreaseSight();
 
         Invoke("TurnOnBlockCube", 1f);
