@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class LockDoor : Door
 {
+    [SerializeField] AudioClip lockedSFX;
+    [SerializeField] AudioClip eventSFX;
     public enum EDoorType 
     {
         KeyDoor,
         CutterDoor,
+        BasementDoor,
         ExitDoor,
         DefalutDoor
     }
@@ -17,14 +20,21 @@ public class LockDoor : Door
 
     void Start()
     {
-        isLock = true;
+        if(doorType == EDoorType.BasementDoor)
+        {
+            isLock = false;
+        }
+        else
+        {
+            isLock = true;
+        }
     }
 
     public override void ToggleDoor()
     {
         if(isLock)
         {
-            Debug.Log("The Door is Locked");
+            AudioSource.PlayClipAtPoint(lockedSFX, transform.position);
             return;
         }
 
@@ -76,9 +86,26 @@ public class LockDoor : Door
         }
     }
 
-    public void Unlock()
+    public void Unlock(bool isInBasement)
     {
         isLock = false;
+        OpenDoor();
+        if (!isInBasement)
+        {
+            AudioSource.PlayClipAtPoint(eventSFX, transform.position);
+            Invoke("PlayMonsterSound", eventSFX.length * 1.5f);
+        }
+    }
+
+    public void Lock()
+    {
+        CloseDoor();
+        isLock = true;
+    }
+
+    void PlayMonsterSound()
+    {
+        soundManager.PlayMonsterSoundWhenOpenDoor();
     }
 
     public EDoorType GetDoorType()
