@@ -25,9 +25,6 @@ public abstract class Item : MonoBehaviour
 
     public abstract bool Use();
 
-    // the number of items
-    public int count { get; set; }
-
     public EItemType GetItemType()
     {
         return itemType;

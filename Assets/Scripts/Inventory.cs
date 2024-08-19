@@ -31,14 +31,6 @@ public class Inventory : MonoBehaviour
     {
         if (selectedItemIndex == -1) return;
 
-        Item.EItemType itemType = inventory[selectedItemIndex].GetComponent<Item>().GetItemType();
-
-        if (inventory[selectedItemIndex].GetComponent<Item>().count > 1)
-        {
-            inventory[selectedItemIndex].GetComponent<Item>().count--;
-            return;
-        }
-
         inventory.RemoveAt(selectedItemIndex);
         Destroy(itemUIPanel.GetChild(selectedItemIndex).gameObject);
         selectedItemIndex = -1;
@@ -81,20 +73,6 @@ public class Inventory : MonoBehaviour
     {
         Item.EItemType itemType = item.GetComponent<Item>().GetItemType();
 
-        // drink can have more than one
-        if (itemType == Item.EItemType.Drink)
-        {
-            for (int i = 0; i < inventory.Count; i++)
-            {
-                Item.EItemType currentItemType = inventory[i].GetComponent<Item>().GetItemType();
-                if (itemType == currentItemType)
-                {
-                    inventory[i].GetComponent<Item>().count++;
-                    return;
-                }
-            }
-        }
-
         inventory.Add(item);
 
         // show item on UI
@@ -102,6 +80,18 @@ public class Inventory : MonoBehaviour
         newGrid.transform.GetChild(0).GetComponent<Image>().sprite = item.GetComponent<Item>().GetItemSprite();
 
         Debug.Log($"Items Acquired : {item.GetComponent<Item>().GetItemType()}");
+
+        if (itemType == Item.EItemType.Key)
+        {
+            Key[] keys = FindObjectsOfType<Key>();
+            if (keys.Length > 0)
+            {
+                foreach (Key key in keys)
+                {
+                    key.gameObject.SetActive(false);
+                }
+            }
+        }
 
         UpdateInventoryUI();
 
