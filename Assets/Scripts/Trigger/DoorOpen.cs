@@ -24,7 +24,7 @@ public class DoorOpen : LightEvent
     {
         if (StartBigSound != null)
         {
-            soundManager.PlaySoundOnce(StartBigSound, playerTransform.position);
+            soundManager.PlayBackgroundSound(StartBigSound);
         }
 
         // start player's sight decrease

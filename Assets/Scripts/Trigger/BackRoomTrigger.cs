@@ -31,8 +31,8 @@ public class BackRoomTrigger : LightEvent
     {
         // turn off light noise
         soundManager.StopBackgroundSound();
-        soundManager.PlayBackgroundSound(chaseSound);
 
+        StartCoroutine(StartBackground());
         StartCoroutine(StartBackRoom());
         StartCoroutine(StartHandsOn());
         for(int i = 0; i < enemys.Length; i++)
@@ -40,6 +40,12 @@ public class BackRoomTrigger : LightEvent
             enemys[i].SetActive(true);
             StartCoroutine(StartEnemyMove(enemys[i], paths[i]));
         }
+    }
+
+    IEnumerator StartBackground()
+    {
+        yield return new WaitForSeconds(3f);
+        soundManager.PlayBackgroundSound(chaseSound);
     }
 
     IEnumerator StartBackRoom()

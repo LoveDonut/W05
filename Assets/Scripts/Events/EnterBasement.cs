@@ -11,16 +11,19 @@ public class EnterBasement : MonoBehaviour
     [SerializeField] GameObject enemy;
     [SerializeField] Light playerLight;
     [SerializeField] float lightOfftime = 3f;
+    [SerializeField] float persistTime = 10f;
     [SerializeField] AudioClip horrorSFX;
     [SerializeField] AudioClip backroomSFX;
     [SerializeField] GameObject[] blockedCubes;
     [SerializeField] LightManager[] lightManagers;
 
     SoundManager soundManager;
-    
+    Status status;
+
     void Awake()
     {
         soundManager = FindObjectOfType<SoundManager>();
+        status = FindObjectOfType<Status>();
     }
     
 
@@ -43,7 +46,7 @@ public class EnterBasement : MonoBehaviour
         }
         //
 
-        Invoke("LightOn", lightOfftime);
+        Invoke("LightOn", persistTime);
     }
 
     void LightOn()
@@ -62,9 +65,9 @@ public class EnterBasement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
-        basementDoor.Lock();
+        basementDoor.Unlock(true); // unlock door
         soundManager.PlayBackgroundSound(backroomSFX);
+        status.IncreaseSight();
 
         Invoke("TurnOnBlockCube", 1f);
     }
