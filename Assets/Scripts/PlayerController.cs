@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     public float minCameraAngle = -60f;     // Maximum angle at which the camera can view upwards
     public float maxCameraAngle = 40f;      // Maximum angle at which the camera can look down
     public float lookSensitivity = 0.03f;    // Camera sensitivity
-    public float lookSmoothSpeed = 0.1f;    // Adjust for smoothness
+    public float lookSmoothSpeed = 0.3f;    // Adjust for smoothness
     public float yRotationSmoothSpeed = 1f; // Smoothness for Y-axis rotation
 
     private Vector2 smoothedLookInput;

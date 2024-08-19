@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  runSpeed: 5
+  runSpeed: 6
   crouchSpeed: 1.5
   climbSpeed: 2
   gravity: -9.81
@@ -403,7 +403,7 @@ MonoBehaviour:
   minCameraAngle: -60
   maxCameraAngle: 60
   lookSensitivity: 0.03
-  lookSmoothSpeed: 0.1
+  lookSmoothSpeed: 0.3
   yRotationSmoothSpeed: 1
   crouchHeight: 1
   standingHeight: 2
@@ -459,6 +459,8 @@ MonoBehaviour:
   staminaCoolTime: 2
   mentalityDecreaseRate: 0.1
   postProcessVolume: {fileID: 0}
+  flashlightDecreaseRate: 1
+  flashlight: {fileID: 0}
 --- !u!114 &3353842586278530980
 MonoBehaviour:
   m_ObjectHideFlags: 0
