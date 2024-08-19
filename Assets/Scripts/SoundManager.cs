@@ -33,6 +33,13 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    public void PlayBackgroundSound(AudioClip audioClip, float vol)
+    {
+        audioSource.clip = audioClip;
+        audioSource.volume = vol;
+        audioSource.Play();
+    }
+
     public void StopBackgroundSound()
     {
         audioSource.Stop();

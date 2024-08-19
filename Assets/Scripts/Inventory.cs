@@ -126,7 +126,7 @@ public class Inventory : MonoBehaviour
         if (SelectedItem.Use())
         {
             if(soundManager != null)
-                soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position);
+                soundManager.PlaySoundOnce(SelectedItem.useSound, Camera.main.transform.position, 0.3f);
 
             RemoveItem();
         }
