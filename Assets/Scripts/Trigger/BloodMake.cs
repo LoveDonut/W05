@@ -24,12 +24,15 @@ public class BloodMake : LightEvent
             blood.SetActive(true);
         }
 
-        FireDoor.SetActive(false);
+        if(FireDoor != null)
+            FireDoor.SetActive(false);
 
         // Turn on sound
-        soundManager.PlayMonsterSound();
+        if(monsterSound != null)
+            soundManager.PlayMonsterSound();
 
         // shake camera
-        playerController.StartCameraShake();
+        if(playerController != null)
+            playerController.StartCameraShake();
     }
 }
