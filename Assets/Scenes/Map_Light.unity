@@ -12861,6 +12861,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlashLight
       objectReference: {fileID: 0}
+    - target: {fileID: 441464692990416154, guid: d46ddf3767f9d60439f0b079a5770f62, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1090868427006024777, guid: d46ddf3767f9d60439f0b079a5770f62, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.2807136
@@ -14688,6 +14692,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &675508979 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 423756397259138503, guid: 9f7c67a00460a63458d81c2db9b459ee, type: 3}
+  m_PrefabInstance: {fileID: 900065703}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &676066887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24661,7 +24670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4819290052982394904, guid: c27ff922e301d9b49b52149acc42c503, type: 3}
       propertyPath: BlinkTypeValue
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6014510177473654845, guid: c27ff922e301d9b49b52149acc42c503, type: 3}
       propertyPath: m_LocalPosition.x
@@ -33791,6 +33800,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Key
       objectReference: {fileID: 0}
+    - target: {fileID: 1002119680763608620, guid: 4ce5c178930ba1544ad3b7dd6e013484, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5731971523779537174, guid: 4ce5c178930ba1544ad3b7dd6e013484, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.7807136
@@ -40144,7 +40157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4819290052982394904, guid: c27ff922e301d9b49b52149acc42c503, type: 3}
       propertyPath: BlinkTypeValue
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6014510177473654845, guid: c27ff922e301d9b49b52149acc42c503, type: 3}
       propertyPath: m_LocalPosition.x
@@ -44192,6 +44205,7 @@ MonoBehaviour:
   - {fileID: 2089462502}
   - {fileID: 806318844}
   - {fileID: 12363575}
+  FireDoor: {fileID: 675508979}
 --- !u!114 &1966288807
 MonoBehaviour:
   m_ObjectHideFlags: 0

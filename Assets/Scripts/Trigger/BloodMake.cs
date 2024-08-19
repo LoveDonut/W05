@@ -10,7 +10,7 @@ public class BloodMake : LightEvent
 
     [Header("트리거 작동시 활성화할 오브젝트")]
     public GameObject[] bloods;
-
+    public GameObject FireDoor;
     void Awake()
     {
         soundManager = FindObjectOfType<SoundManager>();
@@ -21,6 +21,8 @@ public class BloodMake : LightEvent
         {
             blood.SetActive(true);
         }
+
+        FireDoor.SetActive(false);
 
         // Turn on sound
         soundManager.PlayMonsterSound();
