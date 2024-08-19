@@ -10,7 +10,7 @@ public class BackRoomTrigger : LightEvent
     public Light[] lights;
     public GameObject fluorescentLight;
     public GameObject Player;
-
+    public GameObject TrapDoor;
 
     [Header("EnemyChase")]
     public Transform hands;
@@ -40,6 +40,7 @@ public class BackRoomTrigger : LightEvent
             enemys[i].SetActive(true);
             StartCoroutine(StartEnemyMove(enemys[i], paths[i]));
         }
+        TrapDoor.SetActive(false);
     }
 
     IEnumerator StartBackground()
