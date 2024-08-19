@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3024218695990739606}
   - component: {fileID: -8828740193074051368}
+  - component: {fileID: 919927036434852739}
   m_Layer: 0
   m_Name: Battery
   m_TagString: Untagged
@@ -51,6 +52,27 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 9e68b0921761bc741ac05007732c54bf, type: 3}
   getSound: {fileID: 8300000, guid: b6210867de7794e3b997a07ef5fc3f0b, type: 3}
   useSound: {fileID: 8300000, guid: 89d6b6b260540df4db3f4641a6f73abe, type: 3}
+--- !u!65 &919927036434852739
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2485468653714722247}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.39754543, z: 1}
+  m_Center: {x: 0, y: 0.12604807, z: 0}
 --- !u!1 &6554445617617934819
 GameObject:
   m_ObjectHideFlags: 0
