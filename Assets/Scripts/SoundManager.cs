@@ -24,7 +24,6 @@ public class SoundManager : MonoBehaviour
     void Update()
     {
         transform.position = Camera.main.transform.position;
-        Debug.Log($"Position : {transform.position}");
     }
     #endregion
 

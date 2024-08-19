@@ -115,6 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1143952530141323895}
   - component: {fileID: -5760007501463733176}
+  - component: {fileID: 7514737678317976255}
   m_Layer: 0
   m_Name: Key
   m_TagString: Untagged
@@ -131,7 +132,7 @@ Transform:
   m_GameObject: {fileID: 2050031254995181659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -143.8, y: 21.67, z: 2.9219952}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -154,9 +155,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 1
-  ItemOnUI: {fileID: 0}
-  getSound: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: bf10f61c01aa43447b3b9be0e38911ef, type: 3}
+  getSound: {fileID: 8300000, guid: 0facd91fe45bb453ea3e1a0e79ba52b0, type: 3}
   useSound: {fileID: 0}
+--- !u!65 &7514737678317976255
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050031254995181659}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Center: {x: 0.22, y: 5.71, z: 0.42}
 --- !u!1 &6345775456368856970
 GameObject:
   m_ObjectHideFlags: 0
