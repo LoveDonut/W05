@@ -23,6 +23,9 @@ public abstract class Item : MonoBehaviour
     public AudioClip getSound;
     public AudioClip useSound;
 
+    // the number of items
+    public int count { get; set; }
+
     FourEventTrigger fourEventTrigger;
 
     public abstract bool Use();

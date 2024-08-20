@@ -41,7 +41,7 @@ public class Door : MonoBehaviour
     {
         isRotating = true;
 
-        Debug.Log("The Door Opened");
+//        Debug.Log("The Door Opened");
 
         soundManager.PlaySoundOnce(doorOpenSFX, transform.position, 0.5f);
 
